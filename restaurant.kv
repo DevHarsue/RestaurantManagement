@@ -1,0 +1,123 @@
+<BaseMDNavigationItem>:
+    MDNavigationItemIcon:
+        icon: root.icon
+
+    MDNavigationItemLabel:
+        text: root.text
+
+<MesasMDListItem>:
+    MDListItemHeadlineText:
+        text: root.text
+    MDListItemTrailingCheckbox:
+        group: "mesas"
+
+<PlatosSeleccionadoMDListItem>:
+    MDListItemLeadingIcon:
+        icon: root.icon
+    MDListItemHeadlineText:
+        text: root.nombre
+    MDListItemSupportingText:
+        text: root.descripcion
+    MDListItemTertiaryText:
+        text: f'Precio: {root.precio}$'
+
+<TotalMDLabel>:
+    padding: [dp(10)]
+
+<Contenedor>:
+    md_bg_color: self.theme_cls.backgroundColor
+    orientation: 'vertical'
+    MDScreenManager:
+        id: screen_manager
+        MDScreen:
+            name: "ORDEN"
+            MDBoxLayout:
+                size_hint: (1,1)
+                orientation: 'vertical'
+                MDLabel:
+                    adaptive_height: True
+                    padding: dp(10)
+                    halign: 'center'
+                    text: 'SELECCIONE LA MESA'
+                    bold: True
+                    font_size: dp(20)
+                MDScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    size_hint_y: .25
+                    MDList:
+                        id: lista_mesas
+                MDGridLayout:
+                    size_hint_y: .75
+                    cols: 1
+
+                    MDAnchorLayout:
+                        size_hint_y: None
+                        height: boton.height
+                        MDButton:
+                            id: boton
+                            type: 'tonal'
+                            on_release: app.elegir_plato()
+                            MDButtonIcon:
+                                icon: 'plus'
+                            MDButtonText:
+                                text: "Agregar Platillo"
+                    MDScrollView:
+                        do_scroll_x: False
+                        do_scroll_y: True
+                        MDList:
+                            id: lista_platillos
+                            on_children: app.calcular()
+                    MDGridLayout:
+                        cols: 1
+                        spacing: dp(10)
+                        MDDivider:
+                        TotalMDLabel:
+                            id: label_dolar
+                            text: f'TOTAL DOLAR: {self.total}'
+                        MDDivider:
+                        TotalMDLabel:
+                            id: label_cop
+                            text: f'TOTAL COP: {self.total}'
+                        MDDivider:
+                        TotalMDLabel:
+                            id: label_bs
+                            text: f'TOTAL BS: {self.total}'
+                        MDDivider:
+                    MDAnchorLayout:
+                        size_hint_y: None
+                        height: boton.height+(boton.height*0.25)
+                        MDButton:
+                            type: 'tonal'
+                            MDButtonText:
+                                text: "REALIZAR ORDEN"
+        MDScreen:
+            name: "MESAS"
+            MDLabel:
+                text: 'No sea sapo 1'
+        MDScreen:
+            name: "CIERRE"
+            MDLabel:
+                text: 'No sea sapo 2'
+        MDScreen:
+            name: "AJUSTES"
+            MDLabel:
+                text: 'No sea sapo 3'
+
+    MDNavigationBar:
+        on_switch_tabs: app.cambiar_screen(*args)
+        BaseMDNavigationItem:
+            icon: "order-bool-ascending-variant"
+            text: "ORDEN"
+            active: True
+
+        BaseMDNavigationItem:
+            icon: "table"
+            text: "MESAS"
+
+        BaseMDNavigationItem:
+            icon: "close-octagon-outline"
+            text: "CIERRE"
+        BaseMDNavigationItem:
+            icon: "cog-outline"
+            text: "AJUSTES"
