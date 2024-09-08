@@ -1,0 +1,118 @@
+<ScreenOrden>:
+    MDBoxLayout:
+        size_hint: (1,1)
+        orientation: 'vertical'
+        # Boton seleccionar mesa
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_mesa.height+(boton_mesa.height*0.25)
+            CustomButton:
+                id: boton_mesa
+                type: 'tonal'
+                MDButtonIcon:
+                    icon: "table"
+                MDButtonText:
+                    text: "Seleccionar MESA"
+        # Label Mesa
+        MDLabel:
+            text: 'Seleccione una Mesa'
+            padding: "10dp"
+            adaptive_size: True
+            pos_hint: {"center_x":.5}
+            bold: True
+        # Boton agregar plato
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_plato.height
+            CustomButton:
+                id: boton_plato
+                type: 'tonal'
+                on_release: root.cambiar_screen("PLATOS",app)
+                MDButtonIcon:
+                    icon: 'plus'
+                MDButtonText:
+                    text: "Agregar Platillo"
+        # Scroll de platillos
+        MDScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            MDList:
+                id: lista_platillos
+                on_children: contenedor_labels.calcular(self)
+        # LABELS TOTAL
+        ContenedorLabels:
+            id: contenedor_labels
+            cols: 1
+            spacing: dp(10)
+            MDDivider:
+            TotalMDLabel:
+                id: label_dolar
+                text: f'TOTAL DOLAR: {self.total}'
+            MDDivider:
+            TotalMDLabel:
+                id: label_cop
+                text: f'TOTAL COP: {self.total}'
+            MDDivider:
+            TotalMDLabel:
+                id: label_bs
+                text: f'TOTAL BS: {self.total}'
+            MDDivider:
+        # BOTON ORDEN
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_orden.height+(boton_orden.height*0.25)
+            CustomButton:
+                id: boton_orden
+                type: 'tonal'
+                MDButtonText:
+                    text: "REALIZAR ORDEN"
+<ScreenPlatos>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: (1,1)
+        MDTopAppBar:
+            size_hint_x: .99
+            pos_hint: {"center_x": .5}
+            type: "small"
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: root.cambiar_screen("ORDEN",app)
+            MDTopAppBarTitle:
+                text: "SELECCIONA UN PLATO"
+                pos_hint: {"center_x": .5}
+            MDTopAppBarTrailingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "reload"
+        MDBoxLayout:
+            spacing: "12dp"
+            padding: "15dp"
+            adaptive_height: True
+            MDButton:
+                id: boton_menu_tipos_platos
+                pos_hint: {"center_y":.5}
+                on_release: app.abir_menu_tipos_platos()
+                MDButtonIcon:
+                    icon: "filter-outline"
+                MDButtonText:
+                    type: 'tonal'
+                    text: 'Filtrar por:'
+            MDChip:
+                pos_hint: {"center_y":.5}
+                disabled: True
+                MDChipLeadingIcon:
+                    icon: "check-all"
+                MDChipText:
+                    text: 'TODO'
+            # MDSlider:
+            #     disabled: True
+            #     value: 0
+            #     MDSliderHandle:
+            #     MDSliderValueLabel:
+        ScrollView:
+            MDList:
+                PlatoSeleccionarMDListItem:
+                    icon: "food-drumstick-outline"
+                    nombre: "Carne"
+                    descripcion: "Carne ratata"
+                    precio: 12

@@ -1,0 +1,59 @@
+<BarraNavegacion@MDNavigationBar>:
+    on_switch_tabs: app.cambiar_screen(*args)
+    BaseMDNavigationItem:
+        id: boton_orden_bar
+        icon: "order-bool-ascending-variant"
+        text: "ORDEN"
+        active: True
+    BaseMDNavigationItem:
+        icon: "table"
+        text: "MESAS"
+    BaseMDNavigationItem:
+        icon: "close-octagon-outline"
+        text: "CIERRE"
+    BaseMDNavigationItem:
+        icon: "cog-outline"
+        text: "AJUSTES"
+
+<BaseMDNavigationItem>:
+    MDNavigationItemIcon:
+        icon: root.icon
+
+    MDNavigationItemLabel:
+        text: root.text
+
+<PlatoPadreMDListItem>
+    MDListItemLeadingIcon:
+        icon: root.icon
+    MDListItemHeadlineText:
+        text: root.nombre
+    MDListItemSupportingText:
+        text: root.descripcion
+    MDListItemTertiaryText:
+        text: f'Precio: {root.precio}$'
+
+<PlatosSeleccionadoMDListItem>:
+    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("eliminar",self,app)
+
+<PlatoSeleccionarMDListItem>:
+    on_release: app.contenedor.ids.screen_platos.mostrar_dialog("agregar",self,app)
+
+<TotalMDLabel>:
+    padding: "10dp"
+
+<Mesa>:
+    padding: "4dp"
+    style: "outlined"
+    MDRelativeLayout:
+        Image:
+            source: "assets/table.png"
+            size_hint_y: .65
+            pos_hint: {"top": 1}
+            radius: "36dp", "36dp", 0, 0
+        MDLabel:
+            text: root.text
+            adaptive_size: True
+            font_style: 'Title'
+            role: "large"
+            pos_hint: {"center_x":.5,"center_y":.25}
+            bold: True
