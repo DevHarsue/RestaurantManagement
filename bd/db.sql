@@ -339,7 +339,7 @@ CREATE VIEW public.vista_platos AS
     p.plato_descripcion,
     p.plato_precio,
     tp.tipo_plato_id,
-    tp.tipo_plato_nombre
+    tp.tipo_plato_icon
    FROM (public.platos p
      JOIN public.tipos_platos tp ON ((p.tipo_plato_id = tp.tipo_plato_id)));
 
