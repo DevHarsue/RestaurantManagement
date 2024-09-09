@@ -1,17 +1,20 @@
 <BarraNavegacion@MDNavigationBar>:
     on_switch_tabs: app.cambiar_screen(*args)
     BaseMDNavigationItem:
-        id: boton_orden_bar
+        id: boton_ORDEN
         icon: "order-bool-ascending-variant"
         text: "ORDEN"
         active: True
     BaseMDNavigationItem:
+        id: boton_MESAS
         icon: "table"
         text: "MESAS"
     BaseMDNavigationItem:
+        id: boton_CIERRE
         icon: "close-octagon-outline"
         text: "CIERRE"
     BaseMDNavigationItem:
+        id: boton_AJUSTES
         icon: "cog-outline"
         text: "AJUSTES"
 
@@ -25,18 +28,24 @@
 <PlatoPadreMDListItem>
     MDListItemLeadingIcon:
         icon: root.icon
+
+<PlatosSeleccionadoMDListItem>:
+    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("eliminar",self,app)
+    MDListItemHeadlineText:
+        text: f"{root.nombre} x{root.cantidad}"
+    MDListItemSupportingText:
+        text: root.descripcion
+    MDListItemTertiaryText:
+        text: f'Precio: {root.precio*root.cantidad}$'
+
+<PlatoSeleccionarMDListItem>:
+    on_release: app.contenedor.ids.screen_platos.mostrar_dialog("agregar",self,app)
     MDListItemHeadlineText:
         text: root.nombre
     MDListItemSupportingText:
         text: root.descripcion
     MDListItemTertiaryText:
         text: f'Precio: {root.precio}$'
-
-<PlatosSeleccionadoMDListItem>:
-    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("eliminar",self,app)
-
-<PlatoSeleccionarMDListItem>:
-    on_release: app.contenedor.ids.screen_platos.mostrar_dialog("agregar",self,app)
 
 <TotalMDLabel>:
     padding: "10dp"
@@ -57,3 +66,21 @@
             role: "large"
             pos_hint: {"center_x":.5,"center_y":.25}
             bold: True
+
+
+<CustomTextField>:
+    mode: "filled"
+    input_filter: 'int'
+    text: '1'
+    MDTextFieldLeadingIcon:
+        icon: "numeric"
+
+    MDTextFieldHintText:
+        text: "CANTIDAD"
+
+    MDTextFieldHelperText:
+        text: "Cantidad de platos"
+        mode: "persistent"
+
+    MDTextFieldMaxLengthText:
+        max_text_length: 10

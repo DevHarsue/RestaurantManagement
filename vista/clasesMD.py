@@ -4,19 +4,22 @@ from kivymd.uix.list import MDListItem
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDButton
+from kivymd.uix.textfield import MDTextField
 from bd.bd import BaseDatos
 import threading as th
 from kivymd.uix.card import MDCard
 from kivy.properties import StringProperty,NumericProperty
 
 class PlatoPadreMDListItem(MDListItem):
+    id = NumericProperty()
+    tipo_id = NumericProperty()
     icon = StringProperty()
     nombre = StringProperty()
     descripcion = StringProperty()
     precio = NumericProperty()
 
 class PlatosSeleccionadoMDListItem(PlatoPadreMDListItem):
-    pass
+    cantidad = NumericProperty()
 
 class PlatoSeleccionarMDListItem(PlatoPadreMDListItem):
     pass
@@ -35,11 +38,14 @@ class CustomButton(MDButton):
     def on_enter(self, *args):
         pass
 
+class CustomTextField(MDTextField):
+    pass
+
 class ContenedorLabels(MDGridLayout):
     def calcular(self,list):
         total = 0
         for item in list.children:
-            total += item.precio
+            total += item.precio*item.cantidad
         labels = tuple(filter(lambda item: isinstance(item,TotalMDLabel),self.children))
         labels[0].total = total*36
         labels[1].total = total*3700
@@ -52,7 +58,7 @@ class Contenedor(MDBoxLayout):
         try:
             th.Thread(target=self.conectar).start()
             self.ids.screen_mesas.cargar_mesas(self.conexion)
-            # self.contenedor.ids.screen_platos.cargar_platos(self.conexion)
+            self.ids.screen_platos.cargar_platos(self.conexion)
         except Exception as e:
             print(e)
             self.conexion = None
@@ -61,5 +67,10 @@ class Contenedor(MDBoxLayout):
                 self.bd.cerrar_conexion()
     
     def conectar(self):
-        self.conexion = self.bd.conectar()
-        print(self.conexion)
+        try:
+            self.conexion = self.bd.conectar()
+        except Exception as e:
+            print(e)
+            self.conexion = None
+            self.ids.screen_mesas.mesas = None
+            self.ids.screen_platos.platos = None

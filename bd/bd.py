@@ -34,6 +34,11 @@ class TablaMesas(Tabla):
 class TablaPlatos(Tabla):
     def __init__(self):
         self.nombre_tabla = "platos"
+        
+    def select_vista(self,conexion):
+        cursor = conexion.cursor()
+        cursor.execute(f"SELECT * FROM vista_platos")
+        return cursor.fetchall()
 
 class TablaTiposPlatos(Tabla):
     def __init__(self):

@@ -9,6 +9,7 @@
             CustomButton:
                 id: boton_mesa
                 type: 'tonal'
+                on_release: root.cambiar_screen("MESAS",app)
                 MDButtonIcon:
                     icon: "table"
                 MDButtonText:
@@ -64,6 +65,8 @@
             CustomButton:
                 id: boton_orden
                 type: 'tonal'
+                MDButtonIcon:
+                    icon: "check-all"
                 MDButtonText:
                     text: "REALIZAR ORDEN"
 <ScreenPlatos>:
@@ -84,6 +87,7 @@
             MDTopAppBarTrailingButtonContainer:
                 MDActionTopAppBarButton:
                     icon: "reload"
+                    on_release: root.cargar_platos()
         MDBoxLayout:
             spacing: "12dp"
             padding: "15dp"
@@ -91,7 +95,7 @@
             MDButton:
                 id: boton_menu_tipos_platos
                 pos_hint: {"center_y":.5}
-                on_release: app.abir_menu_tipos_platos()
+                on_release: root.abir_menu_tipos_platos()
                 MDButtonIcon:
                     icon: "filter-outline"
                 MDButtonText:
@@ -103,6 +107,7 @@
                 MDChipLeadingIcon:
                     icon: "check-all"
                 MDChipText:
+                    id: chip_text_filtrado
                     text: 'TODO'
             # MDSlider:
             #     disabled: True
@@ -110,9 +115,12 @@
             #     MDSliderHandle:
             #     MDSliderValueLabel:
         ScrollView:
+            size_hint_y: 1
             MDList:
-                PlatoSeleccionarMDListItem:
-                    icon: "food-drumstick-outline"
-                    nombre: "Carne"
-                    descripcion: "Carne ratata"
-                    precio: 12
+                size_hint_y: 1
+                id: lista_platos
+                # PlatoSeleccionarMDListItem:
+                #     icon: "food-drumstick-outline"
+                #     nombre: "Carne"
+                #     descripcion: "Carne ratata"
+                #     precio: 12
