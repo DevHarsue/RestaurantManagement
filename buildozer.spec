@@ -16,7 +16,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = bd/*,vista/*,assets/*
+source.include_patterns = kivy_app/kv/*,kivy_app/screens/*,kivy_app/utils/*,kivy_app/widgets/*,assets/*
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -29,7 +29,7 @@ source.include_patterns = bd/*,vista/*,assets/*
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.3
+version = 0.4
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]

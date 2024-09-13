@@ -1,0 +1,83 @@
+<ScreenOrden>:
+    MDBoxLayout:
+        size_hint: (1,1)
+        orientation: 'vertical'
+        # Boton seleccionar mesa
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_mesa.height+(boton_mesa.height*0.25)
+            CustomButton:
+                id: boton_mesa
+                type: 'tonal'
+                on_release: root.cambiar_screen("MESAS",app)
+                MDButtonIcon:
+                    icon: "table"
+                MDButtonText:
+                    text: "Seleccionar MESA"
+        # Label Mesa
+        MDLabel:
+            text: 'Seleccione una Mesa'
+            padding: "10dp"
+            adaptive_size: True
+            pos_hint: {"center_x":.5}
+            bold: True
+        # Boton agregar plato
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_plato.height
+            CustomButton:
+                id: boton_plato
+                type: 'tonal'
+                on_release: root.cambiar_screen("PLATOS",app)
+                MDButtonIcon:
+                    icon: 'plus'
+                MDButtonText:
+                    text: "Agregar Platillo"
+        # Scroll de platillos
+        MDScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            MDList:
+                id: lista_platillos
+                on_children: root.calcular(self)
+        MDRelativeLayout:
+            size_hint_x: 1
+            adaptive_height: True
+            height: "70dp"
+            MDTopAppBar:
+                style: "small"
+                MDTopAppBarTrailingButtonContainer:
+                    MDActionTopAppBarButton:
+                        icon: "reload"
+                        on_release: root.cargar()
+        # LABELS TOTAL
+        MDGridLayout:
+            id: contenedor_labels
+            cols: 1
+            spacing: dp(10)
+            MDBoxLayout:
+                orientation: 'vertical'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_dolar
+                    text: f'TOTAL DOLAR: {self.total}'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_cop
+                    text: f'TOTAL COP: {self.total}'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_bs
+                    text: f'TOTAL BS: {self.total}'
+                MDDivider:
+        # BOTON ORDEN
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_orden.height+(boton_orden.height*0.25)
+            CustomButton:
+                id: boton_orden
+                type: 'tonal'
+                MDButtonIcon:
+                    icon: "check-all"
+                MDButtonText:
+                    text: "REALIZAR ORDEN"

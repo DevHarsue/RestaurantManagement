@@ -43,3 +43,8 @@ class TablaPlatos(Tabla):
 class TablaTiposPlatos(Tabla):
     def __init__(self):
         self.nombre_tabla = "tipos_platos"
+
+class TablaDivisas(Tabla):
+    def __init__(self):
+        self.nombre_tabla = "divisas"
+        

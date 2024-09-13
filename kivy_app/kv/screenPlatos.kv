@@ -1,0 +1,56 @@
+<ScreenPlatos>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint: (1,1)
+        MDTopAppBar:
+            size_hint_x: .99
+            pos_hint: {"center_x": .5}
+            type: "small"
+            MDTopAppBarLeadingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "arrow-left"
+                    on_release: root.cambiar_screen("ORDEN",app)
+            MDTopAppBarTitle:
+                text: "SELECCIONA UN PLATO"
+                pos_hint: {"center_x": .5}
+            MDTopAppBarTrailingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "reload"
+                    on_press: root.cargar()
+                    on_release: app.contenedor.ids.screen_orden.ids.lista_platillos.clear_widgets()
+        MDBoxLayout:
+            spacing: "12dp"
+            padding: "15dp"
+            adaptive_height: True
+            MDButton:
+                id: boton_menu_tipos_platos
+                pos_hint: {"center_y":.5}
+                on_release: root.abir_menu_tipos_platos()
+                MDButtonIcon:
+                    icon: "filter-outline"
+                MDButtonText:
+                    type: 'tonal'
+                    text: 'Filtrar por:'
+            MDChip:
+                pos_hint: {"center_y":.5}
+                disabled: True
+                MDChipLeadingIcon:
+                    icon: "check-all"
+                MDChipText:
+                    id: chip_text_filtrado
+                    text: 'TODO'
+            # MDSlider:
+            #     disabled: True
+            #     value: 0
+            #     MDSliderHandle:
+            #     MDSliderValueLabel:
+        ScrollView:
+            size_hint_y: 1
+            MDList:
+                size_hint_y: 1
+                id: lista_platos
+                # PlatoSeleccionarMDListItem:
+                #     icon: "food-drumstick-outline"
+                #     nombre: "Carne"
+                #     descripcion: "Carne ratata"
+                #     precio: 12

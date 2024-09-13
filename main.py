@@ -1,6 +1,9 @@
 from kivymd.app import MDApp
 from kivymd.uix.transition import MDSlideTransition
-from vista.screens import *
+from kivy_app.widgets.clasesMD import Contenedor
+from kivy_app.screens.screenOrden import ScreenOrden
+from kivy_app.screens.screenMesas import ScreenMesas
+from kivy_app.screens.screenPlatos import ScreenPlatos
 from kivy.lang import Builder
 
 class RestaurantApp(MDApp):
@@ -17,7 +20,9 @@ class RestaurantApp(MDApp):
         self.root.ids.screen_manager.current = item_text
 
 if __name__=="__main__":
-    Builder.load_file('vista/clasesMD.kv')
-    Builder.load_file('vista/screenPlatosOrden.kv')
-    Builder.load_file('vista/screenMesas.kv')
+    Builder.load_file('kivy_app/kv/clasesMD.kv')
+    Builder.load_file('kivy_app/kv/screenPlatos.kv')
+    Builder.load_file('kivy_app/kv/screenOrden.kv')
+    Builder.load_file('kivy_app/kv/screenMesas.kv')
+    Builder.load_file('kivy_app/kv/restaurant.kv')
     RestaurantApp().run()
