@@ -2,6 +2,8 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivy_app.screens.screens import ScreenPadrePlatosOrden
 from kivy_app.utils.bd import TablaPlatos,TablaTiposPlatos,BaseDatos
 from kivy_app.widgets.clasesMD import PlatoSeleccionarMDListItem
+from kivy.clock import mainthread
+
 
 class ScreenPlatos(ScreenPadrePlatosOrden):
     def __init__(self, *args, **kwargs):
@@ -20,15 +22,15 @@ class ScreenPlatos(ScreenPadrePlatosOrden):
             self.drop_menu.caller= self.ids.boton_menu_tipos_platos
         self.drop_menu.open()
     
-    def cargar(self):
+    def mostrar_carga(self):
         self.contenedor = self.ids.lista_platos
-        super().cargar()
+        super().mostrar_carga()
     
     def datos_modo_false(self):
         self.platos = False
         self.menu_items = False
         
-    def solicitar(self):
+    def solicitar(self,conexion = None):
         bd = BaseDatos()
         try:
             conexion = bd.conectar()
@@ -43,17 +45,20 @@ class ScreenPlatos(ScreenPadrePlatosOrden):
         finally:
             if conexion:
                 bd.cerrar_conexion()
+        self.mostrar()
     
+    @mainthread
     def mostrar(self,*_):
         super().mostrar(self.platos)
         if not self.platos:
             return
         for plato in self.platos:
             self.contenedor.add_widget(PlatoSeleccionarMDListItem(id=plato[0],nombre=plato[1],descripcion=plato[2],precio=plato[3],tipo_id=plato[4],icon=plato[5]))
-            
+        
     def filtrar(self,item=None):
         if item==None:
             self.ids.chip_text_filtrado.text="TODO"
+            self.drop_menu.dismiss()
             self.mostrar()
             return
         self.ids.chip_text_filtrado.text=item[1]

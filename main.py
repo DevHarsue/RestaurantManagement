@@ -1,10 +1,36 @@
 from kivymd.app import MDApp
 from kivymd.uix.transition import MDSlideTransition
-from kivy_app.widgets.clasesMD import Contenedor
-from kivy_app.screens.screenOrden import ScreenOrden
-from kivy_app.screens.screenMesas import ScreenMesas
-from kivy_app.screens.screenPlatos import ScreenPlatos
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.lang import Builder
+import threading as th
+from kivy_app.utils.bd import BaseDatos
+
+class Contenedor(MDBoxLayout):
+    def carga_principal(self):
+        self.ids.screen_mesas.mostrar_carga()
+        self.ids.screen_platos.mostrar_carga()
+        self.ids.screen_orden.mostrar_carga()
+        th.Thread(target=self.conectar).start()
+    
+    def conectar(self):
+        conexion = None
+        try:
+            bd = BaseDatos()
+            conexion = bd.conectar()
+            self.ids.screen_orden.solicitar(conexion)
+            self.ids.screen_mesas.solicitar(conexion)
+            self.ids.screen_platos.solicitar(conexion)
+        except Exception as e:
+            self.ids.screen_orden.tasas = None
+            self.ids.screen_mesas.mesas = None
+            self.ids.screen_platos.platos = None
+            self.ids.screen_orden.mostrar()
+            self.ids.screen_mesas.mostrar()
+            self.ids.screen_platos.mostrar()
+            print(e)
+        finally:
+            if conexion:
+                bd.cerrar_conexion()
 
 class RestaurantApp(MDApp):
     def build(self):
@@ -22,6 +48,7 @@ class RestaurantApp(MDApp):
 if __name__=="__main__":
     Builder.load_file('kivy_app/kv/clasesMD.kv')
     Builder.load_file('kivy_app/kv/screenPlatos.kv')
+    Builder.load_file('kivy_app/kv/screenFinOrden.kv')
     Builder.load_file('kivy_app/kv/screenOrden.kv')
     Builder.load_file('kivy_app/kv/screenMesas.kv')
     Builder.load_file('kivy_app/kv/restaurant.kv')

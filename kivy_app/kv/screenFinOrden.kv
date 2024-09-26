@@ -1,0 +1,47 @@
+#: import ScreenFinOrden kivy_app.screens.screenFinOrden.ScreenFinOrden
+
+<ScreenFinOrden>:
+    MDGridLayout:
+        id: contenedor_fin_orden
+        padding: "30dp"
+        cols: 1
+        size_hint: (1,1)
+        MDRelativeLayout:
+            size_hint_y: None
+            Image:
+                source: "assets/check.png"
+                size_hint_y: .65
+                pos_hint: {"top": 1}
+                radius: "36dp", "36dp", 0, 0
+            MDLabel:
+                text: "Realizado Correctamente"
+                adaptive_size: True
+                font_style: 'Title'
+                role: "large"
+                pos_hint: {"center_x":.5,"center_y":.25}
+                bold: True
+        MDGridLayout:
+            cols: 1
+            spacing: dp(10)
+            MDBoxLayout:
+                orientation: 'vertical'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_dolar
+                    text: f'TOTAL DOLAR: {self.total}'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_cop
+                    text: f'TOTAL COP: {self.total}'
+                MDDivider:
+                TotalMDLabel:
+                    id: label_bs
+                    text: f'TOTAL BS: {self.total}'
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_fin.height+(boton_fin.height*0.25)
+            CustomButton:
+                id: boton_fin
+                type: 'tonal'
+                icon: "check-all"
+                text: "FINALIZAR"

@@ -1,3 +1,5 @@
+#: import ScreenMesas kivy_app.screens.screenMesas.ScreenMesas
+
 <ScreenMesas>:
     MDGridLayout:
         cols: 1
@@ -13,9 +15,13 @@
                         icon: "reload"
                         on_release: root.cargar()
         MDScrollView:
+            size_hint_y: 1
+            do_scroll_x: False
+            do_scroll_y: True
             MDGridLayout:
+                adaptive_height: True if self.cols == 2 else False
                 id: grid_mesas
                 padding: "30dp"
                 cols: 1
-                size_hint: (1,1)
+                size_hint_x: 1
                 spacing: "30dp"

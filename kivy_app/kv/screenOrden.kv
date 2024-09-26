@@ -1,3 +1,5 @@
+#: import ScreenOrden kivy_app.screens.screenOrden.ScreenOrden
+
 <ScreenOrden>:
     MDBoxLayout:
         size_hint: (1,1)
@@ -16,6 +18,7 @@
                     text: "Seleccionar MESA"
         # Label Mesa
         MDLabel:
+            id: label_mesa
             text: 'Seleccione una Mesa'
             padding: "10dp"
             adaptive_size: True
@@ -76,8 +79,7 @@
             height: boton_orden.height+(boton_orden.height*0.25)
             CustomButton:
                 id: boton_orden
+                on_release: root.mostrar_dialog_orden()
                 type: 'tonal'
-                MDButtonIcon:
-                    icon: "check-all"
-                MDButtonText:
-                    text: "REALIZAR ORDEN"
+                icon: "check-all"
+                text: "REALIZAR ORDEN"
