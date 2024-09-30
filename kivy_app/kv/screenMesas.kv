@@ -6,14 +6,12 @@
         MDRelativeLayout:
             size_hint_x: 1
             adaptive_height: True
-            height: "70dp"
-            MDTopAppBar:
-                style: "small"
+            height: "50dp"
+            MDIconButton:
+                icon: "reload"
+                style: "standard"
                 pos_hint: {"right":1}
-                MDTopAppBarTrailingButtonContainer:
-                    MDActionTopAppBarButton:
-                        icon: "reload"
-                        on_release: root.cargar()
+                on_release: root.cargar()
         MDScrollView:
             size_hint_y: 1
             do_scroll_x: False

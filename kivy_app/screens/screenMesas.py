@@ -1,4 +1,4 @@
-from kivy_app.screens.screens import ScreenPadre
+from kivy_app.screens.screen import ScreenPadre
 from kivy_app.utils.bd import TablaMesas,BaseDatos,TablaMesasOcupadas
 from kivy_app.widgets.clasesMD import Mesa
 from kivy.clock import mainthread
@@ -12,6 +12,8 @@ class ScreenMesas(ScreenPadre):
         
     tabla_mesas = TablaMesas()
     tabla_mesas_ocupadas = TablaMesasOcupadas()
+    
+    @mainthread
     def mostrar_carga(self):
         self.contenedor = self.ids.grid_mesas
         super().mostrar_carga()
@@ -54,17 +56,21 @@ class ScreenMesas(ScreenPadre):
     def mostrar_dialog_mesa(self,mesa):
         self.mesa = mesa
         self.supporting_dialog_pregunta.text = f"¿Usar {mesa.text}?" if mesa.libre else f"Agregar a {mesa.text}?" 
+        if not mesa.libre and self.button_container_dialog_pregunta.children[-1] != self.boton_opc_dialog_pregunta:
+                self.button_container_dialog_pregunta.add_widget(self.boton_opc_dialog_pregunta,index=3)
+        elif mesa.libre and self.button_container_dialog_pregunta.children[-1] == self.boton_opc_dialog_pregunta:
+            self.button_container_dialog_pregunta.remove_widget(self.boton_opc_dialog_pregunta)
+            
         self.dialog_pregunta.open()
 
     def seleccionar_mesa(self):
         Window.children[-1].ids.screen_orden.ids.label_mesa.text = self.mesa.text
-        self.dialog_pregunta.dismiss()
-        Window.children[-1].ids.screen_manager.current = "ORDEN"
         Window.children[-1].ids.screen_orden.mesa = self.mesa
-        Window.children[-1].ids.barra_navegacion.ids.boton_ORDEN.active = True
-        Window.children[-1].ids.barra_navegacion.ids.boton_MESAS.active = False
-        
         if self.mesa.libre:
             Window.children[-1].ids.screen_orden.ids.boton_orden.text = "REALIZAR ORDEN"
         else:
             Window.children[-1].ids.screen_orden.ids.boton_orden.text = "AGREGAR A LA ORDEN"
+            
+        self.dialog_pregunta.dismiss()
+        
+        self.cambiar_screen("ORDEN")

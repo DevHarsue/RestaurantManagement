@@ -1,3 +1,4 @@
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.navigationbar import MDNavigationItem
 from kivymd.uix.list import MDListItem
 from kivymd.uix.label import MDLabel
@@ -8,14 +9,18 @@ from kivy.properties import StringProperty,NumericProperty,BooleanProperty
 
 class PlatoPadreMDListItem(MDListItem):
     id = NumericProperty()
-    tipo_id = NumericProperty()
-    icon = StringProperty()
     nombre = StringProperty()
     descripcion = StringProperty()
     precio = NumericProperty()
+    tipo_id = NumericProperty()
+    icon = StringProperty()
 
 class PlatosSeleccionadoMDListItem(PlatoPadreMDListItem):
     cantidad = NumericProperty()
+
+class PlatosListaMDListItem(PlatoPadreMDListItem):
+    cantidad = NumericProperty()
+
 
 class PlatoSeleccionarMDListItem(PlatoPadreMDListItem):
     pass
@@ -27,6 +32,9 @@ class BaseMDNavigationItem(MDNavigationItem):
 class TotalMDLabel(MDLabel):
     total = NumericProperty()
 
+class LabelTotalFinOrden(MDLabel):
+    total = NumericProperty(0)
+    
 class Mesa(MDCard):
     id = NumericProperty()
     text = StringProperty()
@@ -40,4 +48,7 @@ class CustomButton(MDButton):
         pass
 
 class CustomTextField(MDTextField):
+    pass
+
+class BoxReintentar(MDBoxLayout):
     pass

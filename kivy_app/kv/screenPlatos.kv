@@ -4,22 +4,6 @@
     MDBoxLayout:
         orientation: 'vertical'
         size_hint: (1,1)
-        MDTopAppBar:
-            size_hint_x: .99
-            pos_hint: {"center_x": .5}
-            type: "small"
-            MDTopAppBarLeadingButtonContainer:
-                MDActionTopAppBarButton:
-                    icon: "arrow-left"
-                    on_release: root.cambiar_screen("ORDEN",app)
-            MDTopAppBarTitle:
-                text: "SELECCIONA UN PLATO"
-                pos_hint: {"center_x": .5}
-            MDTopAppBarTrailingButtonContainer:
-                MDActionTopAppBarButton:
-                    icon: "reload"
-                    on_press: root.cargar()
-                    on_release: app.contenedor.ids.screen_orden.ids.lista_platillos.clear_widgets()
         MDBoxLayout:
             spacing: "12dp"
             padding: "15dp"
@@ -39,13 +23,16 @@
                 MDChipText:
                     id: chip_text_filtrado
                     text: 'TODO'
-            # MDSlider:
-            #     disabled: True
-            #     value: 0
-            #     MDSliderHandle:
-            #     MDSliderValueLabel:
-        ScrollView:
+            MDRelativeLayout:
+                MDIconButton:
+                    icon: "reload"
+                    style: "standard"
+                    pos_hint: {"right":1}
+                    on_release: root.cargar()
+        MDScrollView:
             size_hint_y: 1
+            do_scroll_x: False
+            do_scroll_y: True
             MDList:
                 size_hint_y: 1
                 id: lista_platos

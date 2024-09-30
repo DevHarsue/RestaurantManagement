@@ -82,7 +82,13 @@ class TablaDetallesOrdenesPlatos(Tabla):
     
     def select_platos_orden_id(self,conexion: pg8000.Connection,orden_id):
         cursor = conexion.cursor()
-        cursor.execute(f"SELECT plato_id FROM detalles_ordenes_platos WHERE orden_id={orden_id};")
+        cursor.execute(f"""
+                        SELECT dop.plato_id,p.plato_nombre,
+                        p.plato_descripcion,p.plato_precio,dop.detalle_orden_plato_cantidad,
+                        tp.tipo_plato_id,tp.tipo_plato_icon
+                        from detalles_ordenes_platos as dop
+                        JOIN platos as p ON p.plato_id=dop.plato_id JOIN tipos_platos as tp
+                        ON tp.tipo_plato_id = p.tipo_plato_id WHERE dop.orden_id={orden_id};""")
         return cursor.fetchall()
     
     def update(self,conexion: pg8000.Connection,orden_id,plato_id,cantidad):

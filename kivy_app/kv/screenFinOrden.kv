@@ -1,16 +1,19 @@
 #: import ScreenFinOrden kivy_app.screens.screenFinOrden.ScreenFinOrden
 
+
+
 <ScreenFinOrden>:
     MDGridLayout:
         id: contenedor_fin_orden
-        padding: "30dp"
+        padding: "10dp"
         cols: 1
         size_hint: (1,1)
         MDRelativeLayout:
-            size_hint_y: None
+            adaptive_height: True
+            spacing: '10dp'
             Image:
                 source: "assets/check.png"
-                size_hint_y: .65
+                size_hint_y: .55
                 pos_hint: {"top": 1}
                 radius: "36dp", "36dp", 0, 0
             MDLabel:
@@ -21,27 +24,91 @@
                 pos_hint: {"center_x":.5,"center_y":.25}
                 bold: True
         MDGridLayout:
-            cols: 1
-            spacing: dp(10)
-            MDBoxLayout:
+            cols: 3
+            size_hint: (1,1)
+            LabelTitle:
+                text: 'PLATOS EN ORDEN'
+            MDDivider:
                 orientation: 'vertical'
-                MDDivider:
-                TotalMDLabel:
-                    id: label_dolar
-                    text: f'TOTAL DOLAR: {self.total}'
-                MDDivider:
-                TotalMDLabel:
-                    id: label_cop
-                    text: f'TOTAL COP: {self.total}'
-                MDDivider:
-                TotalMDLabel:
-                    id: label_bs
-                    text: f'TOTAL BS: {self.total}'
+                size_hint_y: None
+                height: "40dp"
+            LabelTitle:
+                text: 'PLATOS AGREGADOS'
+            MDScrollView:
+                size_hint_y: 1
+                do_scroll_x: False
+                do_scroll_y: True
+                MDList:
+                    on_children: root.calcular_totales("existentes",self)
+                    id: lista_platillos_existentes
+            MDDivider:
+                orientation: 'vertical'
+            MDScrollView:
+                size_hint_y: 1
+                do_scroll_x: False
+                do_scroll_y: True
+                MDList:
+                    on_children: root.calcular_totales("agregados",self)
+                    id: lista_platillos_agregados
+            MDBoxLayout:
+                adaptive_height: True
+                padding: ["5dp",0,0,0]
+                LabelTotalFinOrden:
+                    id: label_dolar_existentes
+                    text: f"Dolar: {self.total}"
+                LabelTotalFinOrden:
+                    id: label_cop_existentes
+                    text: f"COP: {self.total}"
+                LabelTotalFinOrden:
+                    id: label_bs_existentes
+                    text: f"BS: {self.total}"
+            MDDivider:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: "60dp"
+            MDBoxLayout:
+                adaptive_height: True
+                padding: ["5dp",0,0,0]
+                LabelTotalFinOrden:
+                    id: label_dolar_agregados
+                    text: f"Dolar: {self.total}"
+                LabelTotalFinOrden:
+                    id: label_cop_agregados
+                    text: f"COP: {self.total}"
+                LabelTotalFinOrden:
+                    id: label_bs_agregados
+                    text: f"BS: {self.total}"
+        MDDivider:
+        MDGridLayout:
+            padding: "5dp"
+            cols: 3
+            adaptive_height: True
+            TotalMDLabel:
+                adaptive_height: True
+                size_hint_x: 1
+                halign: 'center'
+                id: label_dolar
+                text: f'TOTAL DOLAR: {self.total}'
+            TotalMDLabel:
+                adaptive_height: True
+                size_hint_x: 1
+                halign: 'center'
+                id: label_cop
+                text: f'TOTAL COP: {self.total}'
+            TotalMDLabel:
+                adaptive_height: True
+                size_hint_x: 1
+                halign: 'center'
+                id: label_bs
+                text: f'TOTAL BS: {self.total}'
         MDAnchorLayout:
             size_hint_y: None
-            height: boton_fin.height+(boton_fin.height*0.25)
+            height: boton_fin.height+(boton_fin.height*0.1)
             CustomButton:
                 id: boton_fin
                 type: 'tonal'
                 icon: "check-all"
                 text: "FINALIZAR"
+                on_release: root.finalizar()
+    MDFloatLayout:
+        id: contenedor_carga

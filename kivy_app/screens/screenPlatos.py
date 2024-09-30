@@ -1,11 +1,11 @@
 from kivymd.uix.menu import MDDropdownMenu
-from kivy_app.screens.screens import ScreenPadrePlatosOrden
+from kivy_app.screens.screen import ScreenPadre
 from kivy_app.utils.bd import TablaPlatos,TablaTiposPlatos,BaseDatos
 from kivy_app.widgets.clasesMD import PlatoSeleccionarMDListItem
 from kivy.clock import mainthread
 
 
-class ScreenPlatos(ScreenPadrePlatosOrden):
+class ScreenPlatos(ScreenPadre):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.drop_menu=MDDropdownMenu(position="bottom")

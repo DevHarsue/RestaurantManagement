@@ -25,6 +25,20 @@ SET row_security = off;
 
 ALTER SCHEMA public OWNER TO user_admin;
 
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track planning and execution statistics of all SQL statements executed';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -227,8 +241,7 @@ ALTER TABLE public.mesas_ocupadas OWNER TO user_admin;
 
 CREATE TABLE public.ordenes (
     orden_id integer NOT NULL,
-    orden_fecha timestamp without time zone NOT NULL,
-    mesa_id integer NOT NULL,
+    orden_fecha date NOT NULL,
     cliente_id integer
 );
 
@@ -407,6 +420,7 @@ ALTER TABLE ONLY public.tipos_platos ALTER COLUMN tipo_plato_id SET DEFAULT next
 --
 
 COPY public.clientes (cliente_id, cliente_nacionalidad, cliente_cedula, cliente_nombre, cliente_apellido, cliente_telefono, cliente_direccion) FROM stdin;
+1	V	32325849	Harwing	Martinez	04161797833	Queso
 \.
 
 
@@ -432,8 +446,8 @@ COPY public.detalles_ordenes_platos (detalle_orden_plato_id, orden_id, plato_id,
 
 COPY public.divisas (divisa_id, divisa_nombre, divisa_relacion) FROM stdin;
 1	Dolar	1
-2	Bolivar	36
-3	COP	3700
+2	Bolivar	36.5
+3	COP	3850
 \.
 
 
@@ -448,6 +462,7 @@ COPY public.mesas (mesa_id, mesa_descripcion) FROM stdin;
 10	MESA 4
 11	MESA 5
 12	MESA 6
+13	MESA 7
 \.
 
 
@@ -463,7 +478,7 @@ COPY public.mesas_ocupadas (mesa_id, orden_id) FROM stdin;
 -- Data for Name: ordenes; Type: TABLE DATA; Schema: public; Owner: user_admin
 --
 
-COPY public.ordenes (orden_id, orden_fecha, mesa_id, cliente_id) FROM stdin;
+COPY public.ordenes (orden_id, orden_fecha, cliente_id) FROM stdin;
 \.
 
 
@@ -493,7 +508,7 @@ COPY public.tipos_platos (tipo_plato_id, tipo_plato_nombre, tipo_plato_icon) FRO
 -- Name: clientes_cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
 --
 
-SELECT pg_catalog.setval('public.clientes_cliente_id_seq', 1, false);
+SELECT pg_catalog.setval('public.clientes_cliente_id_seq', 1, true);
 
 
 --
@@ -507,7 +522,7 @@ SELECT pg_catalog.setval('public.detalles_ordenes_divisas_detalle_orden_divisa_s
 -- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
 --
 
-SELECT pg_catalog.setval('public.detalles_ordenes_platos_detalle_orden_plato_id_seq', 1, false);
+SELECT pg_catalog.setval('public.detalles_ordenes_platos_detalle_orden_plato_id_seq', 37, true);
 
 
 --
@@ -521,14 +536,14 @@ SELECT pg_catalog.setval('public.divisas_divisa_id_seq', 6, true);
 -- Name: mesas_mesa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
 --
 
-SELECT pg_catalog.setval('public.mesas_mesa_id_seq', 12, true);
+SELECT pg_catalog.setval('public.mesas_mesa_id_seq', 13, true);
 
 
 --
 -- Name: ordenes_orden_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
 --
 
-SELECT pg_catalog.setval('public.ordenes_orden_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ordenes_orden_id_seq', 8, true);
 
 
 --
@@ -673,14 +688,6 @@ ALTER TABLE ONLY public.ordenes
 
 
 --
--- Name: ordenes ordenes_mesa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
---
-
-ALTER TABLE ONLY public.ordenes
-    ADD CONSTRAINT ordenes_mesa_id_fkey FOREIGN KEY (mesa_id) REFERENCES public.mesas(mesa_id);
-
-
---
 -- Name: platos platos_tipo_plato_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
 --
 
@@ -693,6 +700,20 @@ ALTER TABLE ONLY public.platos
 --
 
 GRANT USAGE ON SCHEMA public TO user_simple;
+
+
+--
+-- Name: FUNCTION pg_stat_statements(showtext boolean, OUT userid oid, OUT dbid oid, OUT toplevel boolean, OUT queryid bigint, OUT query text, OUT plans bigint, OUT total_plan_time double precision, OUT min_plan_time double precision, OUT max_plan_time double precision, OUT mean_plan_time double precision, OUT stddev_plan_time double precision, OUT calls bigint, OUT total_exec_time double precision, OUT min_exec_time double precision, OUT max_exec_time double precision, OUT mean_exec_time double precision, OUT stddev_exec_time double precision, OUT rows bigint, OUT shared_blks_hit bigint, OUT shared_blks_read bigint, OUT shared_blks_dirtied bigint, OUT shared_blks_written bigint, OUT local_blks_hit bigint, OUT local_blks_read bigint, OUT local_blks_dirtied bigint, OUT local_blks_written bigint, OUT temp_blks_read bigint, OUT temp_blks_written bigint, OUT blk_read_time double precision, OUT blk_write_time double precision, OUT temp_blk_read_time double precision, OUT temp_blk_write_time double precision, OUT wal_records bigint, OUT wal_fpi bigint, OUT wal_bytes numeric, OUT jit_functions bigint, OUT jit_generation_time double precision, OUT jit_inlining_count bigint, OUT jit_inlining_time double precision, OUT jit_optimization_count bigint, OUT jit_optimization_time double precision, OUT jit_emission_count bigint, OUT jit_emission_time double precision); Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION public.pg_stat_statements(showtext boolean, OUT userid oid, OUT dbid oid, OUT toplevel boolean, OUT queryid bigint, OUT query text, OUT plans bigint, OUT total_plan_time double precision, OUT min_plan_time double precision, OUT max_plan_time double precision, OUT mean_plan_time double precision, OUT stddev_plan_time double precision, OUT calls bigint, OUT total_exec_time double precision, OUT min_exec_time double precision, OUT max_exec_time double precision, OUT mean_exec_time double precision, OUT stddev_exec_time double precision, OUT rows bigint, OUT shared_blks_hit bigint, OUT shared_blks_read bigint, OUT shared_blks_dirtied bigint, OUT shared_blks_written bigint, OUT local_blks_hit bigint, OUT local_blks_read bigint, OUT local_blks_dirtied bigint, OUT local_blks_written bigint, OUT temp_blks_read bigint, OUT temp_blks_written bigint, OUT blk_read_time double precision, OUT blk_write_time double precision, OUT temp_blk_read_time double precision, OUT temp_blk_write_time double precision, OUT wal_records bigint, OUT wal_fpi bigint, OUT wal_bytes numeric, OUT jit_functions bigint, OUT jit_generation_time double precision, OUT jit_inlining_count bigint, OUT jit_inlining_time double precision, OUT jit_optimization_count bigint, OUT jit_optimization_time double precision, OUT jit_emission_count bigint, OUT jit_emission_time double precision) TO user_admin;
+
+
+--
+-- Name: FUNCTION pg_stat_statements_info(OUT dealloc bigint, OUT stats_reset timestamp with time zone); Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION public.pg_stat_statements_info(OUT dealloc bigint, OUT stats_reset timestamp with time zone) TO user_admin;
 
 
 --

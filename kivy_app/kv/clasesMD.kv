@@ -11,10 +11,10 @@
         id: boton_MESAS
         icon: "table"
         text: "MESAS"
-    # BaseMDNavigationItem:
-    #     id: boton_CIERRE
-    #     icon: "close-octagon-outline"
-    #     text: "CIERRE"
+    BaseMDNavigationItem:
+        id: boton_PLATOS
+        icon: "silverware-variant"
+        text: "PLATOS"
     BaseMDNavigationItem:
         id: boton_AJUSTES
         icon: "cog-outline"
@@ -32,16 +32,24 @@
         icon: root.icon
 
 <PlatosSeleccionadoMDListItem>:
-    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("eliminar",self,app)
+    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("eliminar",self)
     MDListItemHeadlineText:
         text: f"{root.nombre} x{root.cantidad}"
     MDListItemSupportingText:
         text: root.descripcion
     MDListItemTertiaryText:
-        text: f'Precio: {root.precio*root.cantidad}$'
+        text: f'Total: {root.precio*root.cantidad}$'
+
+<PlatosListaMDListItem>:
+    MDListItemHeadlineText:
+        text: f"{root.nombre} x{root.cantidad}"
+    MDListItemSupportingText:
+        text: root.descripcion
+    MDListItemTertiaryText:
+        text: f'Total: {root.precio*root.cantidad}$'
 
 <PlatoSeleccionarMDListItem>:
-    on_release: app.contenedor.ids.screen_platos.mostrar_dialog("agregar",self,app)
+    on_release: app.contenedor.ids.screen_orden.mostrar_dialog("agregar",self)
     MDListItemHeadlineText:
         text: root.nombre
     MDListItemSupportingText:
@@ -51,6 +59,18 @@
 
 <TotalMDLabel>:
     padding: "10dp"
+
+<LabelTitle@MDLabel>:
+    bold: True
+    adaptive_height: True
+    size_hint_y: None
+    halign: 'center'
+    valign: 'top'
+    font_style: 'Title'
+    role: "medium"
+
+<LabelTotalFinOrden>:
+    adaptive_height: True
 
 <Mesa>:
     padding: "4dp"
@@ -96,3 +116,20 @@
         icon: root.icon
     MDButtonText:
         text: root.text
+
+<BoxReintentar>:
+    orientation: 'vertical'
+    MDAnchorLayout:
+        MDLabel:
+            text:"Error de Conexión"
+            size_hint:(1,1)
+            halign:"center"
+            valign:"center"
+    MDAnchorLayout:
+        CustomButton:
+            size_hint:(1,1)
+            halign:"center"
+            valign:"center"
+            icon: "reload"
+            text: "Reintentar"
+            on_release: app.contenedor.ids.screen_fin_orden.reintentar()
