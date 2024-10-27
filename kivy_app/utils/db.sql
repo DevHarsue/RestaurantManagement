@@ -17,13 +17,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: user_admin
+-- Name: public; Type: SCHEMA; Schema: -; Owner: root
 --
 
 -- *not* creating schema, since initdb creates it
 
 
-ALTER SCHEMA public OWNER TO user_admin;
+ALTER SCHEMA public OWNER TO root;
 
 --
 -- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
@@ -44,7 +44,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: clientes; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: clientes; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.clientes (
@@ -58,10 +58,10 @@ CREATE TABLE public.clientes (
 );
 
 
-ALTER TABLE public.clientes OWNER TO user_admin;
+ALTER TABLE public.clientes OWNER TO root;
 
 --
--- Name: clientes_cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: clientes_cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.clientes_cliente_id_seq
@@ -73,17 +73,17 @@ CREATE SEQUENCE public.clientes_cliente_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.clientes_cliente_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.clientes_cliente_id_seq OWNER TO root;
 
 --
--- Name: clientes_cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: clientes_cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.clientes_cliente_id_seq OWNED BY public.clientes.cliente_id;
 
 
 --
--- Name: detalles_ordenes_divisas; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.detalles_ordenes_divisas (
@@ -94,10 +94,10 @@ CREATE TABLE public.detalles_ordenes_divisas (
 );
 
 
-ALTER TABLE public.detalles_ordenes_divisas OWNER TO user_admin;
+ALTER TABLE public.detalles_ordenes_divisas OWNER TO root;
 
 --
--- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq
@@ -109,17 +109,17 @@ CREATE SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq OWNER TO user_admin;
+ALTER SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq OWNER TO root;
 
 --
--- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq OWNED BY public.detalles_ordenes_divisas.detalle_orden_divisa;
 
 
 --
--- Name: detalles_ordenes_platos; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.detalles_ordenes_platos (
@@ -130,10 +130,10 @@ CREATE TABLE public.detalles_ordenes_platos (
 );
 
 
-ALTER TABLE public.detalles_ordenes_platos OWNER TO user_admin;
+ALTER TABLE public.detalles_ordenes_platos OWNER TO root;
 
 --
--- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq
@@ -145,17 +145,17 @@ CREATE SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq OWNER TO root;
 
 --
--- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq OWNED BY public.detalles_ordenes_platos.detalle_orden_plato_id;
 
 
 --
--- Name: divisas; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: divisas; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.divisas (
@@ -165,10 +165,10 @@ CREATE TABLE public.divisas (
 );
 
 
-ALTER TABLE public.divisas OWNER TO user_admin;
+ALTER TABLE public.divisas OWNER TO root;
 
 --
--- Name: divisas_divisa_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: divisas_divisa_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.divisas_divisa_id_seq
@@ -180,17 +180,17 @@ CREATE SEQUENCE public.divisas_divisa_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.divisas_divisa_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.divisas_divisa_id_seq OWNER TO root;
 
 --
--- Name: divisas_divisa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: divisas_divisa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.divisas_divisa_id_seq OWNED BY public.divisas.divisa_id;
 
 
 --
--- Name: mesas; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: mesas; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.mesas (
@@ -199,10 +199,10 @@ CREATE TABLE public.mesas (
 );
 
 
-ALTER TABLE public.mesas OWNER TO user_admin;
+ALTER TABLE public.mesas OWNER TO root;
 
 --
--- Name: mesas_mesa_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: mesas_mesa_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.mesas_mesa_id_seq
@@ -214,17 +214,17 @@ CREATE SEQUENCE public.mesas_mesa_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.mesas_mesa_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.mesas_mesa_id_seq OWNER TO root;
 
 --
--- Name: mesas_mesa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: mesas_mesa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.mesas_mesa_id_seq OWNED BY public.mesas.mesa_id;
 
 
 --
--- Name: mesas_ocupadas; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: mesas_ocupadas; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.mesas_ocupadas (
@@ -233,10 +233,10 @@ CREATE TABLE public.mesas_ocupadas (
 );
 
 
-ALTER TABLE public.mesas_ocupadas OWNER TO user_admin;
+ALTER TABLE public.mesas_ocupadas OWNER TO root;
 
 --
--- Name: ordenes; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: ordenes; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.ordenes (
@@ -246,10 +246,10 @@ CREATE TABLE public.ordenes (
 );
 
 
-ALTER TABLE public.ordenes OWNER TO user_admin;
+ALTER TABLE public.ordenes OWNER TO root;
 
 --
--- Name: ordenes_orden_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: ordenes_orden_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.ordenes_orden_id_seq
@@ -261,17 +261,17 @@ CREATE SEQUENCE public.ordenes_orden_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.ordenes_orden_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.ordenes_orden_id_seq OWNER TO root;
 
 --
--- Name: ordenes_orden_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: ordenes_orden_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.ordenes_orden_id_seq OWNED BY public.ordenes.orden_id;
 
 
 --
--- Name: platos; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: platos; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.platos (
@@ -283,10 +283,10 @@ CREATE TABLE public.platos (
 );
 
 
-ALTER TABLE public.platos OWNER TO user_admin;
+ALTER TABLE public.platos OWNER TO root;
 
 --
--- Name: platos_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: platos_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.platos_plato_id_seq
@@ -298,17 +298,17 @@ CREATE SEQUENCE public.platos_plato_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.platos_plato_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.platos_plato_id_seq OWNER TO root;
 
 --
--- Name: platos_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: platos_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.platos_plato_id_seq OWNED BY public.platos.plato_id;
 
 
 --
--- Name: tipos_platos; Type: TABLE; Schema: public; Owner: user_admin
+-- Name: tipos_platos; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.tipos_platos (
@@ -318,10 +318,10 @@ CREATE TABLE public.tipos_platos (
 );
 
 
-ALTER TABLE public.tipos_platos OWNER TO user_admin;
+ALTER TABLE public.tipos_platos OWNER TO root;
 
 --
--- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: user_admin
+-- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
 CREATE SEQUENCE public.tipos_platos_tipo_plato_id_seq
@@ -333,17 +333,17 @@ CREATE SEQUENCE public.tipos_platos_tipo_plato_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tipos_platos_tipo_plato_id_seq OWNER TO user_admin;
+ALTER SEQUENCE public.tipos_platos_tipo_plato_id_seq OWNER TO root;
 
 --
--- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user_admin
+-- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
 ALTER SEQUENCE public.tipos_platos_tipo_plato_id_seq OWNED BY public.tipos_platos.tipo_plato_id;
 
 
 --
--- Name: vista_platos; Type: VIEW; Schema: public; Owner: user_admin
+-- Name: vista_platos; Type: VIEW; Schema: public; Owner: root
 --
 
 CREATE VIEW public.vista_platos AS
@@ -357,211 +357,132 @@ CREATE VIEW public.vista_platos AS
      JOIN public.tipos_platos tp ON ((p.tipo_plato_id = tp.tipo_plato_id)));
 
 
-ALTER VIEW public.vista_platos OWNER TO user_admin;
+ALTER VIEW public.vista_platos OWNER TO root;
 
 --
--- Name: clientes cliente_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: clientes cliente_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.clientes ALTER COLUMN cliente_id SET DEFAULT nextval('public.clientes_cliente_id_seq'::regclass);
 
 
 --
--- Name: detalles_ordenes_divisas detalle_orden_divisa; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas detalle_orden_divisa; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_divisas ALTER COLUMN detalle_orden_divisa SET DEFAULT nextval('public.detalles_ordenes_divisas_detalle_orden_divisa_seq'::regclass);
 
 
 --
--- Name: detalles_ordenes_platos detalle_orden_plato_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos detalle_orden_plato_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_platos ALTER COLUMN detalle_orden_plato_id SET DEFAULT nextval('public.detalles_ordenes_platos_detalle_orden_plato_id_seq'::regclass);
 
 
 --
--- Name: divisas divisa_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: divisas divisa_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.divisas ALTER COLUMN divisa_id SET DEFAULT nextval('public.divisas_divisa_id_seq'::regclass);
 
 
 --
--- Name: mesas mesa_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: mesas mesa_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.mesas ALTER COLUMN mesa_id SET DEFAULT nextval('public.mesas_mesa_id_seq'::regclass);
 
 
 --
--- Name: ordenes orden_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: ordenes orden_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.ordenes ALTER COLUMN orden_id SET DEFAULT nextval('public.ordenes_orden_id_seq'::regclass);
 
 
 --
--- Name: platos plato_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: platos plato_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.platos ALTER COLUMN plato_id SET DEFAULT nextval('public.platos_plato_id_seq'::regclass);
 
 
 --
--- Name: tipos_platos tipo_plato_id; Type: DEFAULT; Schema: public; Owner: user_admin
+-- Name: tipos_platos tipo_plato_id; Type: DEFAULT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.tipos_platos ALTER COLUMN tipo_plato_id SET DEFAULT nextval('public.tipos_platos_tipo_plato_id_seq'::regclass);
 
 
 --
--- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: user_admin
+-- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.clientes (cliente_id, cliente_nacionalidad, cliente_cedula, cliente_nombre, cliente_apellido, cliente_telefono, cliente_direccion) FROM stdin;
-1	V	32325849	Harwing	Martinez	04161797833	Queso
-\.
-
-
 --
--- Data for Name: detalles_ordenes_divisas; Type: TABLE DATA; Schema: public; Owner: user_admin
+-- Data for Name: detalles_ordenes_divisas; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.detalles_ordenes_divisas (detalle_orden_divisa, orden_id, divisa_id, detalle_orden_divisa_cantidad) FROM stdin;
-\.
 
 
 --
--- Data for Name: detalles_ordenes_platos; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.detalles_ordenes_platos (detalle_orden_plato_id, orden_id, plato_id, detalle_orden_plato_cantidad) FROM stdin;
-\.
-
-
---
--- Data for Name: divisas; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.divisas (divisa_id, divisa_nombre, divisa_relacion) FROM stdin;
-1	Dolar	1
-2	Bolivar	36.5
-3	COP	3850
-\.
-
-
---
--- Data for Name: mesas; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.mesas (mesa_id, mesa_descripcion) FROM stdin;
-7	MESA 1
-8	MESA 2
-9	MESA 3
-10	MESA 4
-11	MESA 5
-12	MESA 6
-13	MESA 7
-\.
-
-
---
--- Data for Name: mesas_ocupadas; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.mesas_ocupadas (mesa_id, orden_id) FROM stdin;
-\.
-
-
---
--- Data for Name: ordenes; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.ordenes (orden_id, orden_fecha, cliente_id) FROM stdin;
-\.
-
-
---
--- Data for Name: platos; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.platos (plato_id, plato_nombre, plato_descripcion, plato_precio, tipo_plato_id) FROM stdin;
-5	Carne	Carne frita de las mas arrechisima	13	1
-6	Pollo	Pollo frito vale	10	1
-7	Agua Panela	Ta fria mrk	1	2
-8	Agua	Agua de la llave (no esta fria)	0.3	2
-\.
-
-
---
--- Data for Name: tipos_platos; Type: TABLE DATA; Schema: public; Owner: user_admin
---
-
-COPY public.tipos_platos (tipo_plato_id, tipo_plato_nombre, tipo_plato_icon) FROM stdin;
-2	BEBIDA	cup-outline
-1	COMIDA	bowl-outline
-\.
-
-
---
--- Name: clientes_cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: clientes_cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.clientes_cliente_id_seq', 1, true);
 
 
 --
--- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.detalles_ordenes_divisas_detalle_orden_divisa_seq', 1, false);
 
 
 --
--- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.detalles_ordenes_platos_detalle_orden_plato_id_seq', 37, true);
 
 
 --
--- Name: divisas_divisa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: divisas_divisa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.divisas_divisa_id_seq', 6, true);
 
 
 --
--- Name: mesas_mesa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: mesas_mesa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.mesas_mesa_id_seq', 13, true);
 
 
 --
--- Name: ordenes_orden_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: ordenes_orden_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.ordenes_orden_id_seq', 8, true);
 
 
 --
--- Name: platos_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: platos_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.platos_plato_id_seq', 8, true);
 
 
 --
--- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user_admin
+-- Name: tipos_platos_tipo_plato_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
 SELECT pg_catalog.setval('public.tipos_platos_tipo_plato_id_seq', 2, true);
 
 
 --
--- Name: clientes clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: clientes clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.clientes
@@ -569,7 +490,7 @@ ALTER TABLE ONLY public.clientes
 
 
 --
--- Name: detalles_ordenes_divisas detalles_ordenes_divisas_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas detalles_ordenes_divisas_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_divisas
@@ -577,7 +498,7 @@ ALTER TABLE ONLY public.detalles_ordenes_divisas
 
 
 --
--- Name: detalles_ordenes_platos detalles_ordenes_platos_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos detalles_ordenes_platos_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_platos
@@ -585,7 +506,7 @@ ALTER TABLE ONLY public.detalles_ordenes_platos
 
 
 --
--- Name: divisas divisas_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: divisas divisas_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.divisas
@@ -593,7 +514,7 @@ ALTER TABLE ONLY public.divisas
 
 
 --
--- Name: mesas mesas_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: mesas mesas_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.mesas
@@ -601,7 +522,7 @@ ALTER TABLE ONLY public.mesas
 
 
 --
--- Name: ordenes ordenes_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: ordenes ordenes_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.ordenes
@@ -609,7 +530,7 @@ ALTER TABLE ONLY public.ordenes
 
 
 --
--- Name: platos platos_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: platos platos_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.platos
@@ -617,7 +538,7 @@ ALTER TABLE ONLY public.platos
 
 
 --
--- Name: tipos_platos tipos_platos_pkey; Type: CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: tipos_platos tipos_platos_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.tipos_platos
@@ -625,14 +546,14 @@ ALTER TABLE ONLY public.tipos_platos
 
 
 --
--- Name: fki_mesas_ocupadas_mesa_id_fkey; Type: INDEX; Schema: public; Owner: user_admin
+-- Name: fki_mesas_ocupadas_mesa_id_fkey; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX fki_mesas_ocupadas_mesa_id_fkey ON public.mesas_ocupadas USING btree (orden_id);
 
 
 --
--- Name: detalles_ordenes_divisas detalles_ordenes_divisas_divisa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas detalles_ordenes_divisas_divisa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_divisas
@@ -640,7 +561,7 @@ ALTER TABLE ONLY public.detalles_ordenes_divisas
 
 
 --
--- Name: detalles_ordenes_divisas detalles_ordenes_divisas_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_divisas detalles_ordenes_divisas_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_divisas
@@ -648,7 +569,7 @@ ALTER TABLE ONLY public.detalles_ordenes_divisas
 
 
 --
--- Name: detalles_ordenes_platos detalles_ordenes_platos_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos detalles_ordenes_platos_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_platos
@@ -656,7 +577,7 @@ ALTER TABLE ONLY public.detalles_ordenes_platos
 
 
 --
--- Name: detalles_ordenes_platos detalles_ordenes_platos_plato_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: detalles_ordenes_platos detalles_ordenes_platos_plato_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.detalles_ordenes_platos
@@ -664,7 +585,7 @@ ALTER TABLE ONLY public.detalles_ordenes_platos
 
 
 --
--- Name: mesas_ocupadas mesas_ocupadas_mesa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: mesas_ocupadas mesas_ocupadas_mesa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.mesas_ocupadas
@@ -672,7 +593,7 @@ ALTER TABLE ONLY public.mesas_ocupadas
 
 
 --
--- Name: mesas_ocupadas mesas_ocupadas_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: mesas_ocupadas mesas_ocupadas_orden_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.mesas_ocupadas
@@ -680,7 +601,7 @@ ALTER TABLE ONLY public.mesas_ocupadas
 
 
 --
--- Name: ordenes ordenes_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: ordenes ordenes_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.ordenes
@@ -688,154 +609,10 @@ ALTER TABLE ONLY public.ordenes
 
 
 --
--- Name: platos platos_tipo_plato_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: user_admin
+-- Name: platos platos_tipo_plato_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.platos
     ADD CONSTRAINT platos_tipo_plato_id_fkey FOREIGN KEY (tipo_plato_id) REFERENCES public.tipos_platos(tipo_plato_id) NOT VALID;
 
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: user_admin
---
-
-GRANT USAGE ON SCHEMA public TO user_simple;
-
-
---
--- Name: FUNCTION pg_stat_statements(showtext boolean, OUT userid oid, OUT dbid oid, OUT toplevel boolean, OUT queryid bigint, OUT query text, OUT plans bigint, OUT total_plan_time double precision, OUT min_plan_time double precision, OUT max_plan_time double precision, OUT mean_plan_time double precision, OUT stddev_plan_time double precision, OUT calls bigint, OUT total_exec_time double precision, OUT min_exec_time double precision, OUT max_exec_time double precision, OUT mean_exec_time double precision, OUT stddev_exec_time double precision, OUT rows bigint, OUT shared_blks_hit bigint, OUT shared_blks_read bigint, OUT shared_blks_dirtied bigint, OUT shared_blks_written bigint, OUT local_blks_hit bigint, OUT local_blks_read bigint, OUT local_blks_dirtied bigint, OUT local_blks_written bigint, OUT temp_blks_read bigint, OUT temp_blks_written bigint, OUT blk_read_time double precision, OUT blk_write_time double precision, OUT temp_blk_read_time double precision, OUT temp_blk_write_time double precision, OUT wal_records bigint, OUT wal_fpi bigint, OUT wal_bytes numeric, OUT jit_functions bigint, OUT jit_generation_time double precision, OUT jit_inlining_count bigint, OUT jit_inlining_time double precision, OUT jit_optimization_count bigint, OUT jit_optimization_time double precision, OUT jit_emission_count bigint, OUT jit_emission_time double precision); Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON FUNCTION public.pg_stat_statements(showtext boolean, OUT userid oid, OUT dbid oid, OUT toplevel boolean, OUT queryid bigint, OUT query text, OUT plans bigint, OUT total_plan_time double precision, OUT min_plan_time double precision, OUT max_plan_time double precision, OUT mean_plan_time double precision, OUT stddev_plan_time double precision, OUT calls bigint, OUT total_exec_time double precision, OUT min_exec_time double precision, OUT max_exec_time double precision, OUT mean_exec_time double precision, OUT stddev_exec_time double precision, OUT rows bigint, OUT shared_blks_hit bigint, OUT shared_blks_read bigint, OUT shared_blks_dirtied bigint, OUT shared_blks_written bigint, OUT local_blks_hit bigint, OUT local_blks_read bigint, OUT local_blks_dirtied bigint, OUT local_blks_written bigint, OUT temp_blks_read bigint, OUT temp_blks_written bigint, OUT blk_read_time double precision, OUT blk_write_time double precision, OUT temp_blk_read_time double precision, OUT temp_blk_write_time double precision, OUT wal_records bigint, OUT wal_fpi bigint, OUT wal_bytes numeric, OUT jit_functions bigint, OUT jit_generation_time double precision, OUT jit_inlining_count bigint, OUT jit_inlining_time double precision, OUT jit_optimization_count bigint, OUT jit_optimization_time double precision, OUT jit_emission_count bigint, OUT jit_emission_time double precision) TO user_admin;
-
-
---
--- Name: FUNCTION pg_stat_statements_info(OUT dealloc bigint, OUT stats_reset timestamp with time zone); Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON FUNCTION public.pg_stat_statements_info(OUT dealloc bigint, OUT stats_reset timestamp with time zone) TO user_admin;
-
-
---
--- Name: SEQUENCE clientes_cliente_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.clientes_cliente_id_seq TO user_simple;
-
-
---
--- Name: SEQUENCE detalles_ordenes_divisas_detalle_orden_divisa_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.detalles_ordenes_divisas_detalle_orden_divisa_seq TO user_simple;
-
-
---
--- Name: TABLE detalles_ordenes_platos; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT,INSERT ON TABLE public.detalles_ordenes_platos TO user_simple;
-
-
---
--- Name: SEQUENCE detalles_ordenes_platos_detalle_orden_plato_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.detalles_ordenes_platos_detalle_orden_plato_id_seq TO user_simple;
-
-
---
--- Name: TABLE divisas; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON TABLE public.divisas TO user_simple;
-
-
---
--- Name: SEQUENCE divisas_divisa_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.divisas_divisa_id_seq TO user_simple;
-
-
---
--- Name: TABLE mesas; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON TABLE public.mesas TO user_simple;
-
-
---
--- Name: SEQUENCE mesas_mesa_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.mesas_mesa_id_seq TO user_simple;
-
-
---
--- Name: TABLE mesas_ocupadas; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT,INSERT,UPDATE ON TABLE public.mesas_ocupadas TO user_simple;
-
-
---
--- Name: TABLE ordenes; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT,INSERT ON TABLE public.ordenes TO user_simple;
-
-
---
--- Name: SEQUENCE ordenes_orden_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.ordenes_orden_id_seq TO user_simple;
-
-
---
--- Name: TABLE platos; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON TABLE public.platos TO user_simple;
-
-
---
--- Name: SEQUENCE platos_plato_id_seq; Type: ACL; Schema: public; Owner: user_admin
---
-
-GRANT SELECT ON SEQUENCE public.platos_plato_id_seq TO user_simple;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON SEQUENCES TO user_admin;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR TYPES; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TYPES TO user_admin;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR FUNCTIONS; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON FUNCTIONS TO user_admin;
-
-
---
--- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: -; Owner: postgres
---
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TABLES TO user_admin;
-
-
---
--- PostgreSQL database dump complete
---
 

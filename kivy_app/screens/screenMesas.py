@@ -9,6 +9,7 @@ class ScreenMesas(ScreenPadre):
         super().__init__(*args, **kwargs)
         self.head_dialog_pregunta.text = "Seleccionar Mesa"
         self.boton_si_dialog_pregunta.on_release = self.seleccionar_mesa
+        self.boton_opc_dialog_pregunta.on_release = self.consultar_orden
         
     tabla_mesas = TablaMesas()
     tabla_mesas_ocupadas = TablaMesasOcupadas()
@@ -74,3 +75,8 @@ class ScreenMesas(ScreenPadre):
         self.dialog_pregunta.dismiss()
         
         self.cambiar_screen("ORDEN")
+    
+    def consultar_orden(self):
+        self.cambiar_screen("CONSULTA")
+        Window.children[-1].ids.screen_consulta.consultar(self.mesa.orden_id)
+        self.dialog_pregunta.dismiss()

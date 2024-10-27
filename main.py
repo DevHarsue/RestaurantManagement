@@ -49,6 +49,7 @@ if __name__=="__main__":
     Builder.load_file('kivy_app/kv/clasesMD.kv')
     Builder.load_file('kivy_app/kv/screenPlatos.kv')
     Builder.load_file('kivy_app/kv/screenFinOrden.kv')
+    Builder.load_file('kivy_app/kv/screenConsulta.kv')
     Builder.load_file('kivy_app/kv/screenOrden.kv')
     Builder.load_file('kivy_app/kv/screenMesas.kv')
     Builder.load_file('kivy_app/kv/restaurant.kv')

@@ -40,7 +40,7 @@ class ScreenPadre(MDScreen):
     
     def mostrar(self,var):
         self.contenedor.clear_widgets()
-        if var == None:
+        if not var:
             self.contenedor.add_widget(MDAnchorLayout(MDLabel(text="Error de Conexión",size_hint=(1,1),halign="center",valign="center")))
     
     def crear_dialog_pregunta(self):

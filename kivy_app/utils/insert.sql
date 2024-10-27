@@ -1,8 +1,13 @@
-INSERT INTO platos(plato_nombre,plato_descripcion,plato_precio,plato_icon)
-values('Carne','Carne frita de las mas arrechisima',13, 'food-steak'),
-('Pollo' ,'Pollo frito vale',10,'food-drumstick-outline'),
-('Agua Panela','Ta fria mrk',1,'cup-outline'),
-('Agua','Agua de la llave (no esta fria)',0.3,'cup-outline');
+INSERT INTO tipos_platos(tipo_plato_nombre,tipo_plato_icon)
+values('Bebida','cup-outline') ,('Comida','bowl-outline')
+
+INSERT INTO platos(plato_nombre,plato_descripcion,plato_precio,tipo_plato_id)
+values
+('Carne','Carne frita de las mas arrechisima',13, 2),
+('Pollo' ,'Pollo frito vale',10,2),
+('Agua Panela','Ta fria mrk',1,1),
+('Agua','Agua de la llave (no esta fria)',0.3,1);
+
 
 INSERT INTO mesas(mesa_descripcion) values('MESA 1'),
 ('MESA 2'), ('MESA 3'), ('MESA 4'), ('MESA 5'), ('MESA 6');

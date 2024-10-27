@@ -1,12 +1,18 @@
 import pg8000
 import datetime
+
 class BaseDatos:
     conexion = None
     def __init__(self) -> None:
         pass
     
     def conectar(self) -> pg8000.Connection:
-        self.conexion = pg8000.connect(user="user_admin",host="dpg-crd7e5jqf0us73atkp9g-a.oregon-postgres.render.com",database="restaurantdb_qv75",port=5432,password="gVqTQMHsYU4HcdR8I9bG36X5pCrdculu")
+        self.conexion = pg8000.connect(
+            user="root",
+            host="dpg-cs4uop5umphs73akq810-a.oregon-postgres.render.com",
+            database="restaurantdb_6os1",
+            port=5432,
+            password="9KBW6yqmQigFmhknfnD7mpffUIa8brhn")
         return self.conexion
     
     def cerrar_conexion(self):
@@ -84,7 +90,8 @@ class TablaDetallesOrdenesPlatos(Tabla):
         cursor = conexion.cursor()
         cursor.execute(f"""
                         SELECT dop.plato_id,p.plato_nombre,
-                        p.plato_descripcion,p.plato_precio,dop.detalle_orden_plato_cantidad,
+                        p.plato_descripcion,p.plato_precio,
+                        dop.detalle_orden_plato_cantidad,
                         tp.tipo_plato_id,tp.tipo_plato_icon
                         from detalles_ordenes_platos as dop
                         JOIN platos as p ON p.plato_id=dop.plato_id JOIN tipos_platos as tp
