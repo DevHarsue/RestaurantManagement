@@ -1,5 +1,5 @@
 from kivy_app.screens.screen import ScreenPadre
-from kivy_app.utils.bd import TablaDivisas,BaseDatos
+from ..utils.API import api
 from kivymd.uix.dialog import MDDialog,MDDialogHeadlineText,MDDialogSupportingText,MDDialogButtonContainer,MDDialogContentContainer
 from kivymd.uix.button import MDButton,MDButtonText
 from kivy.uix.widget import Widget
@@ -14,7 +14,6 @@ class ScreenOrden(ScreenPadre):
         self.crear_dialog_platos()
         self.bolivar = None
         self.cop = None
-        self.tabla_divisas = TablaDivisas()
         self.mesa = None
         self.boton_si_dialog_pregunta.on_release = self.realizar_orden
     
@@ -26,18 +25,11 @@ class ScreenOrden(ScreenPadre):
     def datos_modo_false(self):
         self.tasas = False
         
-    def solicitar(self,conexion = None):
-        bd = BaseDatos()
+    def solicitar(self):
         try:
-            conexion = bd.conectar()
-            self.tasas = self.tabla_divisas.select(conexion)
+            self.tasas = api.get_divisas()
         except Exception as e:
             print(e)
-            conexion = None
-            self.tasas = None
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
         self.mostrar()
     
     @mainthread
@@ -46,8 +38,8 @@ class ScreenOrden(ScreenPadre):
         if not self.tasas:
             return
         self.contenedor.add_widget(self.labels)
-        self.bolivar = self.tasas[1][-1]
-        self.cop = self.tasas[2][-1]
+        self.bolivar = self.tasas[0]["relacion"]
+        self.cop = self.tasas[1]["relacion"]
         self.calcular()
             
         

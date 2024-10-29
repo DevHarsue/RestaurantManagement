@@ -1,8 +1,8 @@
 from kivy_app.screens.screen import ScreenPadre
-from kivy_app.utils.bd import TablaMesas,BaseDatos,TablaMesasOcupadas
 from kivy_app.widgets.clasesMD import Mesa
 from kivy.clock import mainthread
 from kivy.core.window import Window
+from ..utils.API import api
 
 class ScreenMesas(ScreenPadre):
     def __init__(self, *args, **kwargs):
@@ -11,8 +11,6 @@ class ScreenMesas(ScreenPadre):
         self.boton_si_dialog_pregunta.on_release = self.seleccionar_mesa
         self.boton_opc_dialog_pregunta.on_release = self.consultar_orden
         
-    tabla_mesas = TablaMesas()
-    tabla_mesas_ocupadas = TablaMesasOcupadas()
     
     @mainthread
     def mostrar_carga(self):
@@ -22,27 +20,22 @@ class ScreenMesas(ScreenPadre):
     def datos_modo_false(self):
         self.mesas = False
         
-    def solicitar(self,conexion = None):
-        bd = BaseDatos()
+    def solicitar(self):
         try:
-            conexion = bd.conectar()
-            self.mesas = list(self.tabla_mesas.select(conexion))
-            mesas_ocupadas = self.tabla_mesas_ocupadas.select(conexion)
-            for i,mesa in enumerate(self.mesas):
-                ocupada = tuple(filter(lambda x: mesa[0]==x[0],mesas_ocupadas))
-                if ocupada:
-                    ocupada = ocupada[0]
-                    self.mesas[i] = (*mesa,False,ocupada[-1])
-                else:
-                    self.mesas[i] = (*mesa,True,0)
-                
+            self.mesas = api.get_mesas()
+            mesas_ocupadas = api.get_mesas_ocupadas()
+            for m in self.mesas:
+                existe = tuple(filter(lambda x: x["id"]==m["id"],mesas_ocupadas))
+                if bool(existe):
+                    existe = existe[0]
+                    m["libre"] = False
+                    m["orden_id"] = existe["orden_id"]
+                    continue
+                m["libre"] = True
+                m["orden_id"] = 0
+
         except Exception as e:
             print(e)
-            conexion = None
-            self.mesas = None
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
         self.mostrar()
     
     @mainthread
@@ -51,8 +44,8 @@ class ScreenMesas(ScreenPadre):
         if not self.mesas:
             return
         self.contenedor.cols = 2
-        for mesa in self.mesas:
-            self.contenedor.add_widget(Mesa(id=mesa[0],text=mesa[1],libre=mesa[2],orden_id=mesa[3]))
+        for m in self.mesas:
+            self.contenedor.add_widget(Mesa(id=m["id"],text=m["descripcion"],libre=m["libre"],orden_id=m["orden_id"]))
             
     def mostrar_dialog_mesa(self,mesa):
         self.mesa = mesa

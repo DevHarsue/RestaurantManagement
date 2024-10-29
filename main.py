@@ -3,7 +3,6 @@ from kivymd.uix.transition import MDSlideTransition
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.lang import Builder
 import threading as th
-from kivy_app.utils.bd import BaseDatos
 
 class Contenedor(MDBoxLayout):
     def carga_principal(self):
@@ -13,24 +12,18 @@ class Contenedor(MDBoxLayout):
         th.Thread(target=self.conectar).start()
     
     def conectar(self):
-        conexion = None
         try:
-            bd = BaseDatos()
-            conexion = bd.conectar()
-            self.ids.screen_orden.solicitar(conexion)
-            self.ids.screen_mesas.solicitar(conexion)
-            self.ids.screen_platos.solicitar(conexion)
+            self.ids.screen_orden.solicitar()
+            self.ids.screen_mesas.solicitar()
+            self.ids.screen_platos.solicitar()
         except Exception as e:
+            print(e)
             self.ids.screen_orden.tasas = None
             self.ids.screen_mesas.mesas = None
             self.ids.screen_platos.platos = None
             self.ids.screen_orden.mostrar()
             self.ids.screen_mesas.mostrar()
             self.ids.screen_platos.mostrar()
-            print(e)
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
 
 class RestaurantApp(MDApp):
     def build(self):

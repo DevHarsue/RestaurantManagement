@@ -1,15 +1,12 @@
 from kivy_app.screens.screen import ScreenPadre
-from kivy_app.utils.bd import BaseDatos,TablaMesasOcupadas,TablaDetallesOrdenesPlatos,TablaOrdenes
 from kivy_app.widgets.clasesMD import BoxReintentar,PlatosListaMDListItem
+from ..utils.API import api
 from kivy.clock import mainthread
 from kivy.core.window import Window
 import threading as th
 
 
 class ScreenFinOrden(ScreenPadre):
-    tabla_ordenes = TablaOrdenes()
-    tabla_mesas_ocupadas = TablaMesasOcupadas()
-    tabla_detalles_ordenes = TablaDetallesOrdenesPlatos()
     def iniciar(self,mesa_id,mesa_libre,lista_platos,totales,orden_id,bolivar,cop):
         self.ids.lista_platillos_agregados.clear_widgets()
         self.ids.lista_platillos_existentes.clear_widgets()
@@ -30,23 +27,16 @@ class ScreenFinOrden(ScreenPadre):
             
     
     def insertar(self):
-        conexion = None
         try:
-            bd = BaseDatos()
-            conexion = bd.conectar()
-            registro_orden = self.tabla_ordenes.insert(conexion)
-            orden_id = registro_orden[0][0]
-            lista_platos = [(plato["id"],plato["cantidad"]) for plato in self.lista_platos]
-            self.tabla_detalles_ordenes.insert(conexion,orden_id,lista_platos)
-            self.tabla_mesas_ocupadas.insert(conexion,self.mesa_id,orden_id)
+            registro_orden = api.post_orden()
+            orden_id = registro_orden["id"]
+            lista_platos = [ {"plato_id":plato["id"],"cantidad":plato["cantidad"]} for plato in self.lista_platos]
+            api.post_mesas_ocupadas(self.mesa_id,orden_id)
+            api.post_detalles_ordenes_platos(orden_id,lista_platos)
         except Exception as e:
             print(e)
-            conexion = None
             self.mostrar_error()
             return
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
         
         self.mostrar_final()
         self.add_items_lista_agregado()
@@ -55,29 +45,25 @@ class ScreenFinOrden(ScreenPadre):
 
         
     def actualizar(self):
-        conexion = None
         try:
-            bd = BaseDatos()
-            conexion = bd.conectar()
-            platos_existentes = self.tabla_detalles_ordenes.select_platos_orden_id(conexion,self.orden_id)
-            platos_existentes_ids = [x[0] for x in platos_existentes]
+            platos_existentes = api.get_platos_orden(self.orden_id)
+            platos_existentes_ids = [x["plato_id"] for x in platos_existentes]
             lista =[x for x in self.lista_platos]
             for plato in self.lista_platos:
                 if plato["id"] in platos_existentes_ids:
-                    self.tabla_detalles_ordenes.update(conexion,self.orden_id,plato["id"],plato["cantidad"])
+                    api.put_detalles_ordenes_platos(self.orden_id,plato["id"],plato["cantidad"])
                     lista.remove(plato)
                     
             if bool(lista):
-                lista = [(plato["id"],plato["cantidad"]) for plato in lista]
-                self.tabla_detalles_ordenes.insert(conexion,self.orden_id,lista)
-            total = self.tabla_detalles_ordenes.select_calcular_total(conexion,self.orden_id)[0]
+                lista = [{"plato_id":plato["id"],"cantidad":plato["cantidad"]} for plato in lista]
+                api.post_detalles_ordenes_platos(self.orden_id,lista)
+                
+            total = sum([p["precio"] * p["cantidad"] for p in api.get_platos_orden(self.orden_id)])
+            
         except Exception as e:
             print(e)
             self.mostrar_error()
             return
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
         self.mostrar_final()
         self.add_items_lista_existentes(platos_existentes)
         self.add_items_lista_agregado()
@@ -86,12 +72,26 @@ class ScreenFinOrden(ScreenPadre):
     @mainthread
     def add_items_lista_agregado(self):
         for plato in self.lista_platos:
-            self.ids.lista_platillos_agregados.add_widget(PlatosListaMDListItem(id=plato["id"],tipo_id=plato["tipo_id"],icon=plato["icon"],nombre=plato["nombre"],descripcion=plato["descripcion"],precio=plato["precio"],cantidad=plato["cantidad"]))
+            self.ids.lista_platillos_agregados.add_widget(PlatosListaMDListItem(
+                                                            id=plato["id"],
+                                                            tipo_id=plato["tipo_id"],
+                                                            icon=plato["icon"],
+                                                            nombre=plato["nombre"],
+                                                            descripcion=plato["descripcion"],
+                                                            precio=plato["precio"],
+                                                            cantidad=plato["cantidad"]))
     
     @mainthread
     def add_items_lista_existentes(self,platos):
         for plato in platos:
-            self.ids.lista_platillos_existentes.add_widget(PlatosListaMDListItem(id=plato[0],nombre=plato[1],descripcion=plato[2],precio=plato[3],cantidad=plato[4],tipo_id=plato[5],icon=plato[6]))
+            self.ids.lista_platillos_existentes.add_widget(PlatosListaMDListItem(
+                                                            id=plato["plato_id"],
+                                                            tipo_id=plato["tipo_id"],
+                                                            icon=plato["icon"],
+                                                            nombre=plato["nombre"],
+                                                            descripcion=plato["descripcion"],
+                                                            precio=plato["precio"],
+                                                            cantidad=plato["cantidad"]))
             
     @mainthread
     def mostrar_final(self):

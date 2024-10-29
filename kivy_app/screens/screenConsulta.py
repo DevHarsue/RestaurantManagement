@@ -1,5 +1,5 @@
 from kivy_app.screens.screen import ScreenPadre
-from kivy_app.utils.bd import TablaDetallesOrdenesPlatos,BaseDatos,TablaDivisas
+from ..utils.API import api
 from kivy_app.widgets.clasesMD import PlatosListaMDListItem
 from kivy.clock import mainthread
 import threading as th
@@ -15,23 +15,12 @@ class ScreenConsulta(ScreenPadre):
         th.Thread(target=self.solicitar).start()
     
     def solicitar(self):
-        tabla = TablaDetallesOrdenesPlatos()
-        tabla_divisas = TablaDivisas()
-        bd = BaseDatos()
         try:
-            conexion = bd.conectar()
-            self.platos = tabla.select_platos_orden_id(conexion,self.orden_id)
-            self.total = tabla.select_calcular_total(conexion,self.orden_id)[0]
-            self.divisas = tabla_divisas.select(conexion)
+            self.platos = api.get_platos_orden(self.orden_id)
+            self.total = sum([ p["precio"] * p["cantidad"] for p in self.platos])
+            self.divisas = api.get_divisas()
         except Exception as e:
             print(e)
-            conexion = None
-            self.platos = None
-            self.total = None
-            self.divisas = None
-        finally:
-            if conexion:
-                bd.cerrar_conexion()
         self.mostrar()
     
     @mainthread
@@ -45,15 +34,15 @@ class ScreenConsulta(ScreenPadre):
             for plato in self.platos:
                 self.ids.lista_platos_consulta.add_widget(
                     PlatosListaMDListItem(
-                        id = plato[0],
-                        nombre = plato[1],
-                        descripcion = plato[2],
-                        precio = plato[3],
-                        cantidad = plato[4],
-                        tipo_id = plato[5],
-                        icon = plato[6]
+                        id = plato["plato_id"],
+                        nombre = plato["nombre"],
+                        descripcion = plato["descripcion"],
+                        precio = plato["precio"],
+                        cantidad = plato["cantidad"],
+                        tipo_id = plato["tipo_id"],
+                        icon = plato["icon"]
                     ))
             self.ids.label_dolar.total=self.total
-            self.ids.label_bs.total=round(self.total*self.divisas[1][-1],2)
-            self.ids.label_cop.total=round(self.total*self.divisas[2][-1])
+            self.ids.label_bs.total=round(self.total*self.divisas[0]["relacion"],2)
+            self.ids.label_cop.total=round(self.total*self.divisas[1]["relacion"])
                 

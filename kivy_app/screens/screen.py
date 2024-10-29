@@ -35,7 +35,7 @@ class ScreenPadre(MDScreen):
     def datos_modo_false(self):
         pass
     
-    def solicitar(self,conexion = None):
+    def solicitar(self):
         pass
     
     def mostrar(self,var):
