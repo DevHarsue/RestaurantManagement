@@ -9,6 +9,7 @@ class Contenedor(MDBoxLayout):
         self.ids.screen_mesas.mostrar_carga()
         self.ids.screen_platos.mostrar_carga()
         self.ids.screen_orden.mostrar_carga()
+        self.ids.screen_ajustes.cargar_host()
         th.Thread(target=self.conectar).start()
     
     def conectar(self):
@@ -18,9 +19,6 @@ class Contenedor(MDBoxLayout):
             self.ids.screen_platos.solicitar()
         except Exception as e:
             print(e)
-            self.ids.screen_orden.tasas = None
-            self.ids.screen_mesas.mesas = None
-            self.ids.screen_platos.platos = None
             self.ids.screen_orden.mostrar()
             self.ids.screen_mesas.mostrar()
             self.ids.screen_platos.mostrar()
@@ -45,5 +43,6 @@ if __name__=="__main__":
     Builder.load_file('kivy_app/kv/screenConsulta.kv')
     Builder.load_file('kivy_app/kv/screenOrden.kv')
     Builder.load_file('kivy_app/kv/screenMesas.kv')
+    Builder.load_file('kivy_app/kv/screenAjustes.kv')
     Builder.load_file('kivy_app/kv/restaurant.kv')
     RestaurantApp().run()

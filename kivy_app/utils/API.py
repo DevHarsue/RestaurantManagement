@@ -1,7 +1,26 @@
 import requests
+import json
 
 class API:
-    host = "https://restaurantmanagmentapi.onrender.com/"
+    def __init__(self):
+        self.host = "https://restaurantmanagmentapi.onrender.com/"
+        try:
+            with open("config.json", mode="r") as file:
+                self.host = json.load(file)["host"]
+        except Exception:
+            try:
+                with open("config.json", mode="w") as file:
+                    json.dump({"host": self.host}, file)
+            except Exception:
+                self.host = "https://restaurantmanagmentapi.onrender.com/"
+    
+    def cambiar_host(self,host):
+        self.host = host
+        try:
+            with open("config.json", mode="w") as file:
+                json.dump({"host": host}, file)
+        except Exception:
+            self.host = "https://restaurantmanagmentapi.onrender.com/"
     
     def HTTPRequestGET(self,endpoint: str,body: dict={}):
         try:
