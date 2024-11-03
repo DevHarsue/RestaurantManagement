@@ -21,8 +21,10 @@ class ScreenFinOrden(ScreenPadre):
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_carga.add_widget(self.crear_progress_circular())
         if mesa_libre:
+            self.show_snackbar("Realizando Orden")
             th.Thread(target=self.insertar).start()
         else:
+            self.show_snackbar("Agregando a la Orden")
             th.Thread(target=self.actualizar).start()
             
     
@@ -95,6 +97,7 @@ class ScreenFinOrden(ScreenPadre):
             
     @mainthread
     def mostrar_final(self):
+        self.snack_bar.dismiss()
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_fin_orden.opacity = 1
         
@@ -111,6 +114,8 @@ class ScreenFinOrden(ScreenPadre):
     
     @mainthread
     def mostrar_error(self):
+        self.snack_bar.dismiss()
+        self.show_snackbar("Error de Conexión")
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_carga.add_widget(BoxReintentar())
     

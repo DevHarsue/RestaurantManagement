@@ -12,6 +12,7 @@ class ScreenConsulta(ScreenPadre):
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_carga.add_widget(self.crear_progress_circular())
         self.contenedor = self.ids.contenedor_carga
+        self.show_snackbar("CARGANDO...")
         th.Thread(target=self.solicitar).start()
     
     def solicitar(self):

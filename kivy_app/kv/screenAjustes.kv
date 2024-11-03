@@ -1,0 +1,33 @@
+#: import ScreenAjustes kivy_app.screens.screenAjustes.ScreenAjustes
+
+<ScreenAjustes>:
+    MDGridLayout:
+        size_hint: .8,1
+        pos_hint: {"center_x":0.5}
+        cols: 1
+        MDLabel:
+            size_hint_x: 1
+            adaptive_height: True
+            padding: "20dp"
+            font_style: "Title"
+            rol: "large"
+            halign: 'center'
+            bold: True
+            text: 'AJUSTES'
+        MDTextField:
+            id: text_field_url
+            mode: "outlined"
+            text: 'https://restaurantmanagmentapi.onrender.com/'
+            MDTextFieldLeadingIcon:
+                icon: "link"
+            MDTextFieldHelperText:
+                text: "URL para la API"
+                mode: "persistent"
+        MDAnchorLayout:
+            size_hint_y: None
+            height: boton_guardar.height+(boton_guardar.height*0.4)
+            CustomButton:
+                id: boton_guardar
+                text: "GUARDAR"
+                icon: "content-save-edit-outline"
+                on_press: root.guardar_host()

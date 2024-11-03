@@ -3,3 +3,4 @@ venv
 .vscode
 bin
 __pycache__
+config.json
