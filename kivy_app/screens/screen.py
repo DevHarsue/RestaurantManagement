@@ -64,14 +64,14 @@ class ScreenPadre(MDScreen):
         boton_no.on_release = self.dialog_pregunta.dismiss
     
     def cambiar_screen(self,current):
-        Window.children[-1].ids.screen_manager.current = current
-        for text in ["ORDEN","MESAS","PLATOS","AJUSTES"]:
-            Window.children[-1].ids.barra_navegacion.ids[f"boton_{text}"].active = False
+        Window.children[-1].children[0].ids.screen_manager.current = current
+        for text in ["ORDEN","MESAS","PLATOS"]:
+            Window.children[-1].children[0].ids.barra_navegacion.ids[f"boton_{text}"].active = False
         try:
-            Window.children[-1].ids.barra_navegacion.ids[f"boton_{current}"].active = True
+            Window.children[-1].children[0].ids.barra_navegacion.ids[f"boton_{current}"].active = True
         except:
             pass
-
+    @mainthread
     def show_snackbar(self,text):
         close_button = MDSnackbarCloseButton(
                         icon="close",

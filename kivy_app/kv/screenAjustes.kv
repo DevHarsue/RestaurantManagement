@@ -19,6 +19,7 @@
             mode: "outlined"
             text: 'https://restaurantmanagmentapi.onrender.com/'
             MDTextFieldLeadingIcon:
+                id: icon_text_field_url
                 icon: "link"
             MDTextFieldHelperText:
                 text: "URL para la API"
@@ -31,3 +32,13 @@
                 text: "GUARDAR"
                 icon: "content-save-edit-outline"
                 on_press: root.guardar_host()
+    MDRelativeLayout:
+        MDIconButton:
+            icon: "arrow-left"
+            style: "standard"
+            pos_hint: {"left":1,"top":1}
+            theme_font_size: "Custom"
+            font_size: "30sp"
+            size_hint: None, None
+            size: "45dp", "45dp"
+            on_press: app.inicio.ids.screen_manager_start.current = "INICIO"

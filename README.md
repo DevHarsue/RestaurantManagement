@@ -8,5 +8,5 @@ Para la version Android el uso es para el mesero, que podra tomar los pedidos de
 ### Windows:
 Para la version Windows hay dos usos, dependiendo del acceso, uno para la administracion (caja) y otro para el cocinero (o ayudante del mismo).
 
-Pienso utilizar **postgresql** para este proyecto, por ahora la instalacion solo seria instalar a traves de pip los **requirements.txt**
+Por ahora la instalacion solo seria instalar a traves de pip los **requirements.txt**
 Agrego ademas el **buildozer.spec**, en caso de querer empaquetarlo (para versiones posteriores me gustaria subirla a algun servidor como mediafire)

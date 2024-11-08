@@ -15,6 +15,8 @@ class ScreenMesas(ScreenPadre):
     @mainthread
     def mostrar_carga(self):
         self.contenedor = self.ids.grid_mesas
+        self.contenedor.adaptive_height = False
+        self.contenedor.cols = 1
         super().mostrar_carga()
         
     def datos_modo_false(self):
@@ -43,6 +45,7 @@ class ScreenMesas(ScreenPadre):
         super().mostrar(self.mesas)
         if not self.mesas:
             return
+        self.contenedor.adaptive_height = True
         self.contenedor.cols = 2
         for m in self.mesas:
             self.contenedor.add_widget(Mesa(id=m["id"],text=m["descripcion"],libre=m["libre"],orden_id=m["orden_id"]))
@@ -58,12 +61,12 @@ class ScreenMesas(ScreenPadre):
         self.dialog_pregunta.open()
 
     def seleccionar_mesa(self):
-        Window.children[-1].ids.screen_orden.ids.label_mesa.text = self.mesa.text
-        Window.children[-1].ids.screen_orden.mesa = self.mesa
+        Window.children[-1].children[0].ids.screen_orden.ids.label_mesa.text = self.mesa.text
+        Window.children[-1].children[0].ids.screen_orden.mesa = self.mesa
         if self.mesa.libre:
-            Window.children[-1].ids.screen_orden.ids.boton_orden.text = "REALIZAR ORDEN"
+            Window.children[-1].children[0].ids.screen_orden.ids.boton_orden.text = "REALIZAR ORDEN"
         else:
-            Window.children[-1].ids.screen_orden.ids.boton_orden.text = "AGREGAR A LA ORDEN"
+            Window.children[-1].children[0].ids.screen_orden.ids.boton_orden.text = "AGREGAR A LA ORDEN"
             
         self.dialog_pregunta.dismiss()
         
@@ -71,5 +74,5 @@ class ScreenMesas(ScreenPadre):
     
     def consultar_orden(self):
         self.cambiar_screen("CONSULTA")
-        Window.children[-1].ids.screen_consulta.consultar(self.mesa.orden_id)
+        Window.children[-1].children[0].ids.screen_consulta.consultar(self.mesa.orden_id)
         self.dialog_pregunta.dismiss()

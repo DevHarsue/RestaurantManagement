@@ -4,12 +4,13 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.lang import Builder
 import threading as th
 
+class Inicio(MDBoxLayout):
+    pass
 class Contenedor(MDBoxLayout):
     def carga_principal(self):
         self.ids.screen_mesas.mostrar_carga()
         self.ids.screen_platos.mostrar_carga()
         self.ids.screen_orden.mostrar_carga()
-        self.ids.screen_ajustes.cargar_host()
         th.Thread(target=self.conectar).start()
     
     def conectar(self):
@@ -27,14 +28,22 @@ class RestaurantApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Purple"
+        self.contenedor_zero = MDBoxLayout()
         self.contenedor = Contenedor()
-        self.contenedor.ids.screen_manager.transition=MDSlideTransition(direction="up")
-        #Carga Principal de la base de datos
-        self.contenedor.carga_principal()
-        return self.contenedor
+        self.inicio = Inicio()
+        self.inicio.ids.screen_ajustes.cargar_host()
+        self.inicio.ids.screen_manager_start.transition=MDSlideTransition(direction="up")
+        self.contenedor_zero.add_widget(self.inicio)
+        return self.contenedor_zero
 
+    def cambiar_inicio(self):
+        self.contenedor.ids.screen_manager.transition=MDSlideTransition(direction="up")
+        self.contenedor_zero.clear_widgets()
+        self.contenedor_zero.add_widget(self.contenedor)
+        self.contenedor.carga_principal()
+        
     def cambiar_screen(self,bar, item,item_icon, item_text):
-        self.root.ids.screen_manager.current = item_text
+        self.contenedor.ids.screen_manager.current = item_text
 
 if __name__=="__main__":
     Builder.load_file('kivy_app/kv/clasesMD.kv')

@@ -83,7 +83,7 @@ class ScreenOrden(ScreenPadre):
                         "precio": plato.precio,
                         "cantidad": plato.cantidad
                         } for plato in platos]
-        Window.children[-1].ids.screen_fin_orden.iniciar(self.mesa.id,self.mesa.libre,lista_platos,totales,self.mesa.orden_id,self.bolivar,self.cop)
+        Window.children[-1].children[0].ids.screen_fin_orden.iniciar(self.mesa.id,self.mesa.libre,lista_platos,totales,self.mesa.orden_id,self.bolivar,self.cop)
         self.parent.current = "FINORDEN"
         self.dialog_pregunta.dismiss()
         self.ids.lista_platillos.clear_widgets()

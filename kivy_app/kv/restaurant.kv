@@ -1,3 +1,56 @@
+<Inicio>:
+    md_bg_color: self.theme_cls.backgroundColor
+    MDScreenManager:
+        id: screen_manager_start
+        MDScreen:
+            name: "INICIO"
+            MDRelativeLayout:
+                pos_hint: {"top":1}
+                size_hint_y: .25
+                Image:
+                    source: "assets/logo.png"
+                    size_hint_y: .95
+                    pos_hint: {"top": 1}
+                    radius: "36dp", "36dp", 0, 0
+                MDLabel:
+                    text: "RESTAURANT\nMANAGEMENT"
+                    adaptive_size: True
+                    halign: 'center'
+                    font_style: 'Display'
+                    role: "small"
+                    pos_hint: {"center_x":.5,"center_y":-.2}
+                    bold: True
+            MDBoxLayout:
+                pos_hint: {"bottom":1}
+                size_hint_y: .15
+                orientation: 'vertical'
+                MDAnchorLayout:
+                    CustomButton:
+                        width: screen_manager_start.width*0.95
+                        text: 'INICIAR SESIÓN'
+                        icon: "login"
+                        on_press: app.cambiar_inicio()
+                MDAnchorLayout:
+                    CustomButton:
+                        width: screen_manager_start.width*0.95
+                        text: 'CERRAR SESIÓN'
+                        icon: "logout"
+                        on_press: app.stop()
+            MDRelativeLayout:
+                MDIconButton:
+                    icon: "cog-outline"
+                    style: "standard"
+                    pos_hint: {"right":1,"top":1}
+                    theme_font_size: "Custom"
+                    font_size: "30sp"
+                    size_hint: None, None
+                    size: "45dp", "45dp"
+                    on_press: screen_manager_start.current = "AJUSTES"
+        ScreenAjustes:
+            id: screen_ajustes
+            name: "AJUSTES"
+
+
 <Contenedor>:
     md_bg_color: self.theme_cls.backgroundColor
     orientation: 'vertical'
@@ -12,9 +65,6 @@
         ScreenPlatos:
             id: screen_platos
             name: "PLATOS"
-        ScreenAjustes:
-            id: screen_ajustes
-            name: "AJUSTES"
         ScreenFinOrden:
             id: screen_fin_orden
             name: "FINORDEN"

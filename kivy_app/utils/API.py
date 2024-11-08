@@ -52,6 +52,9 @@ class API:
         except Exception as e:
             print(f"Error: {e}")
         return None
+
+    def test_host(self) -> dict:
+        return self.HTTPRequestGET("")
     
     def get_platos(self) -> list[dict]:
         return self.HTTPRequestGET('platos')

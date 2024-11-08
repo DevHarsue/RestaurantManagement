@@ -43,7 +43,7 @@ class ScreenFinOrden(ScreenPadre):
         self.mostrar_final()
         self.add_items_lista_agregado()
         self.colocar_totales()
-        Window.children[-1].ids.screen_mesas.cargar()
+        Window.children[-1].children[0].ids.screen_mesas.cargar()
 
         
     def actualizar(self):
@@ -128,7 +128,7 @@ class ScreenFinOrden(ScreenPadre):
             th.Thread(target=self.actualizar).start()
     
     def finalizar(self):
-        Window.children[-1].ids.screen_manager.current = "ORDEN"
+        self.cambiar_screen("ORDEN")
     
     def calcular_totales(self,lista_remitente,lista):
         total = 0
