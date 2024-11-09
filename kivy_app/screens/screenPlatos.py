@@ -31,19 +31,26 @@ class ScreenPlatos(ScreenPadre):
     def solicitar(self):
         try:
             self.platos = api.get_platos()
-            self.menu_items = [(
-                                {
-                                    "text":item["nombre"],
-                                    "leading_icon":item["icon"],
-                                    "on_release":lambda x=item:self.filtrar(x)
-                                }) for item in api.get_tipos_platos()]
-            self.menu_items.insert(0,{"text":"TODO","leading_icon":"food","on_release":self.filtrar})
+            self.preparar_datos(api.get_tipos_platos())
         except Exception as e:
             print(e)
         self.mostrar()
     
+    def preparar_datos(self,tipos_platos):
+        self.menu_items = [(
+                                {
+                                    "text":item["nombre"],
+                                    "leading_icon":item["icon"],
+                                    "on_release":lambda x=item:self.filtrar(x)
+                                }) for item in tipos_platos]
+        self.menu_items.insert(0,{"text":"TODO","leading_icon":"food","on_release":self.filtrar})
+    
     @mainthread
-    def mostrar(self,*_):
+    def mostrar(self,datos=None):
+        if datos:
+            self.platos = datos["platos_tipos"]
+            self.preparar_datos(datos["tipos_platos"])
+        
         super().mostrar(self.platos)
         if not self.platos:
             return
@@ -65,7 +72,6 @@ class ScreenPlatos(ScreenPadre):
         self.ids.chip_text_filtrado.text=item["nombre"]
         self.drop_menu.dismiss()
         self.ids.lista_platos.clear_widgets()
-        print(item)
         items_filtrados = tuple(filter(lambda x: x["tipo_id"]==item["id"],self.platos))
         for plato in items_filtrados:
             self.ids.lista_platos.add_widget(PlatoSeleccionarMDListItem(

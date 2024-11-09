@@ -7,7 +7,6 @@ from kivymd.uix.button import MDButton,MDButtonText
 from kivymd.uix.progressindicator import MDCircularProgressIndicator
 from kivymd.uix.anchorlayout import MDAnchorLayout
 from kivymd.uix.label import MDLabel
-from kivymd.uix.snackbar import MDSnackbar,MDSnackbarText,MDSnackbarButtonContainer,MDSnackbarCloseButton
 import threading as th
 
 
@@ -16,7 +15,6 @@ class ScreenPadre(MDScreen):
         super().__init__(*args, **kwargs)
         self.crear_dialog_pregunta()
         self.contenedor = None
-        self.snack_bar = None
         
     def crear_progress_circular(self):
         circular_progress = MDCircularProgressIndicator(size_hint=(None, None),size=("50dp","50dp"),pos_hint={"center_x":0.5,"center_y":.5})
@@ -45,8 +43,8 @@ class ScreenPadre(MDScreen):
     
     def mostrar(self,var):
         self.contenedor.clear_widgets()
-        if self.snack_bar:
-            self.snack_bar.dismiss()
+        if Window.children[-1].children[0].snackbar:
+            Window.children[-1].children[0].snackbar.dismiss()
         if not var:
             self.contenedor.add_widget(MDAnchorLayout(MDLabel(text="Error de Conexión",size_hint=(1,1),halign="center",valign="center")))
             self.show_snackbar("Error de Conexión")
@@ -71,24 +69,7 @@ class ScreenPadre(MDScreen):
             Window.children[-1].children[0].ids.barra_navegacion.ids[f"boton_{current}"].active = True
         except:
             pass
+        
     @mainthread
     def show_snackbar(self,text):
-        close_button = MDSnackbarCloseButton(
-                        icon="close",
-                    )
-        
-        self.snack_bar = MDSnackbar(
-            MDSnackbarText(
-                text=text,
-            ),
-            MDSnackbarButtonContainer(
-                close_button,
-                pos_hint={"center_y": 0.5}
-            ),
-            y="90dp",
-            orientation="horizontal",
-            pos_hint={"center_x": 0.5},
-            size_hint_x=0.5,
-        )
-        self.snack_bar.open()
-        close_button.on_press = self.snack_bar.dismiss
+        Window.children[-1].children[0].show_snackbar(text)

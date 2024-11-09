@@ -1,12 +1,17 @@
 from kivymd.app import MDApp
 from kivymd.uix.transition import MDSlideTransition
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.snackbar import MDSnackbar,MDSnackbarText,MDSnackbarButtonContainer,MDSnackbarCloseButton
 from kivy.lang import Builder
+from kivy.clock import mainthread
 import threading as th
+from kivy_app.utils.API import api
 
 class Inicio(MDBoxLayout):
     pass
+        
 class Contenedor(MDBoxLayout):
+    snackbar = None
     def carga_principal(self):
         self.ids.screen_mesas.mostrar_carga()
         self.ids.screen_platos.mostrar_carga()
@@ -15,24 +20,56 @@ class Contenedor(MDBoxLayout):
     
     def conectar(self):
         try:
-            self.ids.screen_orden.solicitar()
-            self.ids.screen_mesas.solicitar()
-            self.ids.screen_platos.solicitar()
+            data = api.get_initial_android()
+            self.ids.screen_orden.mostrar(data["section_divisas"])
+            self.ids.screen_mesas.mostrar(data["section_mesas"])
+            self.ids.screen_platos.mostrar(data["section_platos"])
         except Exception as e:
             print(e)
-            self.ids.screen_orden.mostrar()
-            self.ids.screen_mesas.mostrar()
-            self.ids.screen_platos.mostrar()
+            for x in ["screen_orden","screen_mesas","screen_platos"]:
+                self.ids[x].mostrar()
+            import time
+            time.sleep(1)
+            self.show_snackbar("ERROR DE\nCARGA INICIAL")
+    
+    @mainthread
+    def show_snackbar(self,text):
+        if self.snackbar:
+            self.snackbar.dismiss()
+        close_button = MDSnackbarCloseButton(
+                        icon="close",
+                    )
+        
+        self.snackbar = MDSnackbar(
+            MDSnackbarText(
+                text=text,
+                pos_hint= {'center_x': 0.5},
+                halign="center"
+            ),
+            MDSnackbarButtonContainer(
+                close_button,
+                pos_hint={"center_y": 0.5}
+            ),
+            y="90dp",
+            orientation="horizontal",
+            pos_hint={"center_x": 0.5},
+            size_hint_x=0.5,
+        )
+        self.snackbar.open()
+        close_button.on_press = self.snackbar.dismiss
 
 class RestaurantApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Purple"
         self.contenedor_zero = MDBoxLayout()
+        
         self.contenedor = Contenedor()
         self.inicio = Inicio()
         self.inicio.ids.screen_ajustes.cargar_host()
+        self.inicio.ids.screen_ajustes.contenedor = self.contenedor
         self.inicio.ids.screen_manager_start.transition=MDSlideTransition(direction="up")
+        
         self.contenedor_zero.add_widget(self.inicio)
         return self.contenedor_zero
 

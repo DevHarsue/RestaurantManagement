@@ -10,7 +10,7 @@
             MDGridLayout:
                 id: grid_mesas
                 cols: 2
-                adaptive_height: False
+                adaptive_height: True
                 padding: "30dp"
                 size_hint_x: 1
                 spacing: "30dp"
@@ -20,3 +20,6 @@
             style: "standard"
             pos_hint: {"right":1,"top":1}
             on_release: root.cargar()
+    MDFloatLayout:
+        id: contenedor_carga
+        opacity: 0

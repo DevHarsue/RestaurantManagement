@@ -33,7 +33,8 @@ class ScreenOrden(ScreenPadre):
         self.mostrar()
     
     @mainthread
-    def mostrar(self,*_):
+    def mostrar(self,datos=None):
+        self.tasas = self.tasas if not datos else datos
         super().mostrar(self.tasas)
         if not self.tasas:
             return

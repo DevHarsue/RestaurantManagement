@@ -97,7 +97,7 @@ class ScreenFinOrden(ScreenPadre):
             
     @mainthread
     def mostrar_final(self):
-        self.snack_bar.dismiss()
+        Window.children[-1].children[0].snackbar.dismiss()
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_fin_orden.opacity = 1
         
@@ -114,7 +114,7 @@ class ScreenFinOrden(ScreenPadre):
     
     @mainthread
     def mostrar_error(self):
-        self.snack_bar.dismiss()
+        Window.children[-1].children[0].snackbar.dismiss()
         self.show_snackbar("Error de Conexión")
         self.ids.contenedor_carga.clear_widgets()
         self.ids.contenedor_carga.add_widget(BoxReintentar())

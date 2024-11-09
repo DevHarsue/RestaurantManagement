@@ -14,9 +14,9 @@ class ScreenMesas(ScreenPadre):
     
     @mainthread
     def mostrar_carga(self):
-        self.contenedor = self.ids.grid_mesas
-        self.contenedor.adaptive_height = False
-        self.contenedor.cols = 1
+        self.ids.grid_mesas.clear_widgets()
+        self.contenedor = self.ids.contenedor_carga
+        self.contenedor.opacity = 1
         super().mostrar_carga()
         
     def datos_modo_false(self):
@@ -26,29 +26,37 @@ class ScreenMesas(ScreenPadre):
         try:
             self.mesas = api.get_mesas()
             mesas_ocupadas = api.get_mesas_ocupadas()
-            for m in self.mesas:
-                existe = tuple(filter(lambda x: x["id"]==m["id"],mesas_ocupadas))
-                if bool(existe):
-                    existe = existe[0]
-                    m["libre"] = False
-                    m["orden_id"] = existe["orden_id"]
-                    continue
-                m["libre"] = True
-                m["orden_id"] = 0
+            self.preparar_datos(mesas_ocupadas)
 
         except Exception as e:
             print(e)
         self.mostrar()
     
-    @mainthread
-    def mostrar(self,*_):
-        super().mostrar(self.mesas)
-        if not self.mesas:
-            return
-        self.contenedor.adaptive_height = True
-        self.contenedor.cols = 2
+    def preparar_datos(self,mesas_ocupadas):
         for m in self.mesas:
-            self.contenedor.add_widget(Mesa(id=m["id"],text=m["descripcion"],libre=m["libre"],orden_id=m["orden_id"]))
+            existe = tuple(filter(lambda x: x["id"]==m["id"],mesas_ocupadas))
+            if bool(existe):
+                existe = existe[0]
+                m["libre"] = False
+                m["orden_id"] = existe["orden_id"]
+                continue
+            m["libre"] = True
+            m["orden_id"] = 0
+    
+    @mainthread
+    def mostrar(self,datos=None):
+        if datos:
+            self.mesas = datos["mesas"]
+            mesas_ocupadas = datos["mesas_ocupadas"]
+            self.preparar_datos(mesas_ocupadas)
+        
+        super().mostrar(self.mesas)
+        self.contenedor.opacity = 0
+        if not self.mesas:
+            self.contenedor.opacity = 1
+            return
+        for m in self.mesas:
+            self.ids.grid_mesas.add_widget(Mesa(id=m["id"],text=m["descripcion"],libre=m["libre"],orden_id=m["orden_id"]))
             
     def mostrar_dialog_mesa(self,mesa):
         self.mesa = mesa

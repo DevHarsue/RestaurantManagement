@@ -23,39 +23,28 @@ class API:
             self.host = "https://restaurantmanagmentapi.onrender.com/"
     
     def HTTPRequestGET(self,endpoint: str,body: dict={}):
-        try:
-            response = requests.get(self.host + endpoint, json=body)
-            if response.status_code==200:
-                return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+        response = requests.get(self.host + endpoint, json=body)
+        if response.status_code==200:
+            return response.json()
         return None
     
     def HTTPRequestPOST(self,endpoint: str,body: dict={}):
-        try:
-            response = requests.post(self.host + endpoint, json=body)
-            if response.status_code==201:
-                return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
-        except Exception as e:
-            print(f"Error: {e}")
+        response = requests.post(self.host + endpoint, json=body)
+        if response.status_code==201:
+            return response.json()
         return None
     
     def HTTPRequestPUT(self,endpoint: str,body: dict={}):
-        try:
-            response = requests.put(self.host + endpoint, json=body)
-            if response.status_code==200:
-                return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
-        except Exception as e:
-            print(f"Error: {e}")
+        response = requests.put(self.host + endpoint, json=body)
+        if response.status_code==200:
+            return response.json()
         return None
 
     def test_host(self) -> dict:
         return self.HTTPRequestGET("")
     
+    def get_initial_android(self) -> dict:
+        return self.HTTPRequestGET("initial/android")
     def get_platos(self) -> list[dict]:
         return self.HTTPRequestGET('platos')
     def get_tipos_platos(self) -> list[dict]:
