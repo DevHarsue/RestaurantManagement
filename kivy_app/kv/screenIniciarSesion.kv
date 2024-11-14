@@ -1,0 +1,49 @@
+#: import ScreenIniciarSesion kivy_app.screens.screenIniciarSesion.ScreenIniciarSesion
+
+
+<TextFieldForm@MDTextField>:
+    mode: 'outlined'
+    size_hint_x: .75
+
+<ScreenIniciarSesion>:
+    MDRelativeLayout:
+        size_hint_y: 1
+        MDGridLayout:
+            cols: 1
+            padding: "20dp"
+            spacing: "20dp"
+            adaptive_height: True
+            pos_hint: {"top":.95}
+            TextFieldForm:
+                pos_hint: {"center_x":.5}
+                id: username
+                MDTextFieldLeadingIcon:
+                    icon: "account-outline"
+                MDTextFieldHintText:
+                    text: "USUARIO"
+            TextFieldForm:
+                pos_hint: {"center_x":.5}
+                password: True
+                id: password
+                MDTextFieldLeadingIcon:
+                    icon: "lock-outline"
+                MDTextFieldHintText:
+                    text: "CONTRASEÑA"
+            MDAnchorLayout:
+                size_hint_y: None
+                height: button_iniciar_sesion.height*1.1
+                CustomButton:
+                    width: root.width*0.95
+                    id: button_iniciar_sesion
+                    text: "INICIAR SESION"
+                    icon: "login"
+                    on_press: root.iniciar_sesion()
+        MDIconButton:
+            icon: "arrow-left"
+            style: "standard"
+            pos_hint: {"left":1,"top":1}
+            theme_font_size: "Custom"
+            font_size: "30sp"
+            size_hint: None, None
+            size: "45dp", "45dp"
+            on_press: app.inicio.ids.screen_manager_start.current = "INICIO"

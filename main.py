@@ -8,7 +8,24 @@ import threading as th
 from kivy_app.utils.API import api
 
 class Inicio(MDBoxLayout):
-    pass
+    def iniciar_sesion(self,usuario,contraseña):
+        self.ids.contenedor_carga_iniciar_sesion.opacity = 1
+        self.ids.contenedor_carga_iniciar_sesion.disabled = True
+        app.contenedor.show_snackbar("INICIANDO SESION")
+        th.Thread(target=self.iniciar,args=[usuario,contraseña]).start()
+    
+    def iniciar(self,usuario,contraseña):
+        if api.login(usuario,contraseña):
+            app.cambiar_inicio()
+        else:
+            app.contenedor.show_snackbar("ERROR AL INICIAR SESION")
+            self.quitar_carga()
+    
+    @mainthread
+    def quitar_carga(self):
+        self.ids.contenedor_carga_iniciar_sesion.opacity = 0
+        self.ids.contenedor_carga_iniciar_sesion.disabled = False
+    
         
 class Contenedor(MDBoxLayout):
     snackbar = None
@@ -70,15 +87,27 @@ class RestaurantApp(MDApp):
         self.inicio.ids.screen_ajustes.contenedor = self.contenedor
         self.inicio.ids.screen_manager_start.transition=MDSlideTransition(direction="up")
         
+        if not api.detectar_token():
+            self.inicio.ids.button_cerrar_sesion.disabled = True
+        
         self.contenedor_zero.add_widget(self.inicio)
         return self.contenedor_zero
 
+    @mainthread
     def cambiar_inicio(self):
+        if not api.detectar_token():
+            self.inicio.ids.screen_manager_start.current = "INICIAR_SESION"
+            return
         self.contenedor.ids.screen_manager.transition=MDSlideTransition(direction="up")
         self.contenedor_zero.clear_widgets()
         self.contenedor_zero.add_widget(self.contenedor)
         self.contenedor.carga_principal()
+
+    def borrar_token(self):
+        api.borrar_token()
+        self.inicio.ids.button_cerrar_sesion.disabled = True
         
+    
     def cambiar_screen(self,bar, item,item_icon, item_text):
         self.contenedor.ids.screen_manager.current = item_text
 
@@ -90,5 +119,7 @@ if __name__=="__main__":
     Builder.load_file('kivy_app/kv/screenOrden.kv')
     Builder.load_file('kivy_app/kv/screenMesas.kv')
     Builder.load_file('kivy_app/kv/screenAjustes.kv')
+    Builder.load_file('kivy_app/kv/screenIniciarSesion.kv')
     Builder.load_file('kivy_app/kv/restaurant.kv')
-    RestaurantApp().run()
+    app = RestaurantApp()
+    app.run()

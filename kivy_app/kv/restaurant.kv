@@ -3,6 +3,7 @@
     MDScreenManager:
         id: screen_manager_start
         MDScreen:
+            id: screen_inicio
             name: "INICIO"
             MDRelativeLayout:
                 pos_hint: {"top":1}
@@ -32,10 +33,11 @@
                         on_press: app.cambiar_inicio()
                 MDAnchorLayout:
                     CustomButton:
+                        id: button_cerrar_sesion
                         width: screen_manager_start.width*0.95
                         text: 'CERRAR SESIÓN'
                         icon: "logout"
-                        on_press: app.stop()
+                        on_press: app.borrar_token()
             MDRelativeLayout:
                 MDIconButton:
                     icon: "cog-outline"
@@ -46,9 +48,20 @@
                     size_hint: None, None
                     size: "45dp", "45dp"
                     on_press: screen_manager_start.current = "AJUSTES"
+            MDRelativeLayout:
+                id: contenedor_carga_iniciar_sesion
+                md_bg_color: (0,0,0,.75)
+                opacity: 0
+                MDCircularProgressIndicator:
+                    pos_hint: {"center_x":.5,"center_y":.5}
+                    size_hint: None, None
+                    size: "48dp", "48dp"
         ScreenAjustes:
             id: screen_ajustes
             name: "AJUSTES"
+        ScreenIniciarSesion:
+            id: screen_iniciar_sesion
+            name: "INICIAR_SESION"
 
 
 <Contenedor>:

@@ -4,6 +4,7 @@ import json
 class API:
     def __init__(self):
         self.host = "https://restaurantmanagmentapi.onrender.com/"
+        self.token = None
         try:
             with open("config.json", mode="r") as file:
                 self.host = json.load(file)["host"]
@@ -17,25 +18,69 @@ class API:
     def cambiar_host(self,host):
         self.host = host
         try:
-            with open("config.json", mode="w") as file:
-                json.dump({"host": host}, file)
+            with open("config.json", mode="r+") as file:
+                data = json.load(file)
+                data["host"] = host
+                file.seek(0)
+                json.dump(data, file)
+                file.truncate()
         except Exception:
             self.host = "https://restaurantmanagmentapi.onrender.com/"
     
+    def detectar_token(self):
+        try:
+            with open("config.json", mode="r") as file:
+                self.token = json.load(file).get("token")
+                if self.token:
+                    return True
+        except Exception as e:
+            print(e)
+            self.token = None
+        
+        return False
+
+    def borrar_token(self):
+        try:
+            with open("config.json", mode="r+") as file:
+                data = json.load(file)
+                data = {"host":data["host"]}
+                file.seek(0)
+                json.dump(data, file)
+                file.truncate()
+        except Exception:
+            pass
+    
+    def login(self,usuario,contraseña):
+        response = requests.post(self.host + "token",data={"username":usuario,"password":contraseña})
+        if response.status_code == 200:
+            self.token = response.json()["access_token"]
+            try:
+                with open("config.json", mode="r+") as file:
+                    data = json.load(file)
+                    data["token"] = self.token
+                    file.seek(0)
+                    json.dump(data, file)
+                    file.truncate()
+                    return True
+            except Exception as e:
+                print(e)
+        return False
+    
     def HTTPRequestGET(self,endpoint: str,body: dict={}):
-        response = requests.get(self.host + endpoint, json=body)
+        response = requests.get(self.host + endpoint, json=body,headers={"Authorization": f"Bearer {self.token}"})
+        print(response.status_code)
         if response.status_code==200:
             return response.json()
         return None
     
     def HTTPRequestPOST(self,endpoint: str,body: dict={}):
-        response = requests.post(self.host + endpoint, json=body)
+        response = requests.post(self.host + endpoint, json=body,headers={"Authorization": f"Bearer {self.token}"})
         if response.status_code==201:
             return response.json()
         return None
     
     def HTTPRequestPUT(self,endpoint: str,body: dict={}):
-        response = requests.put(self.host + endpoint, json=body)
+        response = requests.put(self.host + endpoint, json=body,headers={"Authorization": f"Bearer {self.token}"})
         if response.status_code==200:
             return response.json()
         return None
